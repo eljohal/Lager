@@ -90,6 +90,7 @@ public class SceneOverviewController {
 	public void editCar() throws IOException {
 		if(caroverview.getSelectionModel().getSelectedItem() != null ) {
 			Car ident = caroverview.getSelectionModel().getSelectedItem();
+			SceneEditCarController.init(ident);
 			root = FXMLLoader.load(getClass().getResource("EditCar.fxml"));
 			stag = (Stage) createcar.getScene().getWindow();
 			stag.setScene(new Scene(root));

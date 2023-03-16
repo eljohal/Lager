@@ -1,10 +1,13 @@
 package application;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 
 public class MySQLDatenbankConnection {
 	
@@ -71,6 +74,22 @@ public class MySQLDatenbankConnection {
 			
 		}
 		return "Error";
+	}
+	public static LocalDate getDate(String qry) {
+		try {
+			PreparedStatement ps = con.prepareStatement(qry);
+			ps.execute();
+			ResultSet st = ps.executeQuery();
+			if (st.next()) {
+				LocalDate date = LocalDate.parse(new SimpleDateFormat("yyyy-MM-dd").format(st.getDate(1)));
+			    return date;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			
+		}
+		return LocalDate.of(0000, 0, 0);
 	}
 	
 	public static int getInt(String qry) {
