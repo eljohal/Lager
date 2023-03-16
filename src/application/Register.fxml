@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="571.0" prefWidth="300.0" style="-fx-background-color: GREY;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.SceneRegisterController">
+   <children>
+      <TextField editable="false" layoutX="157.0" layoutY="470.0" prefHeight="25.0" prefWidth="131.0" style="-fx-background-color: GREY;" />
+      <TextField fx:id="usernameTextInput" layoutX="50.0" layoutY="145.0" prefHeight="25.0" prefWidth="200.0" promptText="Username (*)" style="-fx-background-color: WHITE;" />
+      <TextField fx:id="preNameTextInput" layoutX="50.0" layoutY="185.0" prefHeight="25.0" prefWidth="200.0" promptText="Vorname" style="-fx-background-color: WHITE;" />
+      <TextField fx:id="surnameTextInput" layoutX="50.0" layoutY="225.0" prefHeight="25.0" prefWidth="200.0" promptText="Nachname" style="-fx-background-color: WHITE;" />
+      <TextField fx:id="emailTextInput" layoutX="50.0" layoutY="305.0" prefHeight="25.0" prefWidth="200.0" promptText="E-Mail" />
+      <TextField fx:id="telefonTextInput" layoutX="50.0" layoutY="345.0" prefHeight="25.0" prefWidth="200.0" promptText="Telefonnummer" />
+      <PasswordField fx:id="password1Password" layoutX="50.0" layoutY="405.0" prefHeight="25.0" prefWidth="200.0" promptText="Passwort (*)" />
+      <PasswordField fx:id="password2Password" layoutX="50.0" layoutY="445.0" prefHeight="25.0" prefWidth="200.0" promptText="Passwortwiederholung (*)" />
+      <Label layoutX="16.0" layoutY="36.0" text="Registrierung">
+         <font>
+            <Font name="Arial" size="45.0" />
+         </font>
+      </Label>
+      <Button fx:id="register" layoutX="60.0" layoutY="525.0" mnemonicParsing="false" onAction="#register" prefHeight="25.0" prefWidth="80.0" style="-fx-background-color: WHITE;" text="Registrieren" />
+      <Button fx:id="abbrechenButton" layoutX="160.0" layoutY="525.0" mnemonicParsing="false" onAction="#switchToLogin" prefHeight="25.0" prefWidth="80.0" style="-fx-background-color: WHITE;" text="Abbrechen" />
+      <Label fx:id="registerLabel" layoutX="50.0" layoutY="500.0" prefHeight="17.0" prefWidth="200.0" text="" textFill="RED">
+         <font>
+            <Font name="Arial" size="12.0" />
+         </font>
+      </Label>
+      <Label fx:id="registerLabel1" layoutX="172.0" layoutY="474.0" prefHeight="17.0" prefWidth="119.0" text="(*) erforderlich">
+         <font>
+            <Font name="Arial" size="12.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>
