@@ -51,7 +51,7 @@ public class SceneOverviewController {
 	TextFlow textshow;
 	
 	Text ausgabeedit = new Text("Bitte wähle vorher ein Fahrzeug aus der Liste um es zu bearbeiten.");
-	Text ausgabedelete = new Text("Bitte wähle vorher das Fahrzeug gewissenhaft was gelscht werden soll!");
+	Text ausgabedelete = new Text("Bitte wähle vorher das Fahrzeug gewissenhaft was gelöscht werden soll!");
 	
 	public static ObservableList<Car> getCarData(){
 		

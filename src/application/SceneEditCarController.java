@@ -15,6 +15,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
@@ -37,7 +38,11 @@ public class SceneEditCarController {
 	
 	static int carid;
 	static String zulass;
-	
+	static String herstell;
+	static String model;
+	static String farbcodee;
+	static String fahrgestellnmr;
+	static int hubraume;
 	@FXML
 	TextField hersteller;
 	@FXML
@@ -66,56 +71,45 @@ public class SceneEditCarController {
 	TextFlow show;
 	@FXML 
 	Button abbrechen;
-	@FXML
-	TextFlow herstell;
 	//change all textflow to label
 	@FXML
-	TextFlow modl;
+	Label herstelle;
 	@FXML
-	TextFlow zulassg;
+	Label modle;
 	@FXML
-	TextFlow farbcd;
+	Label zulassge;
 	@FXML
-	TextFlow fahrgstellnmr;
+	Label farbcde;
 	@FXML
-	TextFlow hbr;
+	Label fahrgstellnmre;
 	@FXML
-	TextFlow kmstand;
+	Label hbre;
 	@FXML
-	TextFlow getrieb;
+	Label kmstande;
 	@FXML
-	TextFlow getriebco;
+	Label getriebee;
 	@FXML
-	TextFlow krftstf;
+	Label getriebcoe;
 	@FXML
-	TextFlow lst;
+	Label krftstfe;
 	@FXML
-	TextFlow motrcd;
+	Label lste;
 	@FXML
-	TextFlow tuerz;
+	Label motrcde;
+	@FXML
+	Label tuerze;
 	
 	@FXML
 	public void initialize() {
 		// TODO Auto-generated method stub
-		herstell.getChildren().clear();
-		modl.getChildren().clear();
-		zulassg.getChildren().clear();
-		Text zul = new Text(""+zulass);
-		zul.getBaselineOffset();
-		zulassg.getChildren().addAll(zul);
-		farbcd.getChildren().clear();
-		fahrgstellnmr.getChildren().clear();
-		hbr.getChildren().clear();
-		kmstand.getChildren().clear();
-		getrieb.getChildren().clear();
-		getriebco.getChildren().clear();
-		krftstf.getChildren().clear();
-		lst.getChildren().clear();
-		motrcd.getChildren().clear();
-		tuerz.getChildren().clear();
+		herstelle.setText(" "+herstell);
+		modle.setText(" "+model);
+		farbcde.setText(" "+farbcodee);
+		zulassge.setText(" "+zulass);
 		kraftstoff.getItems().addAll(fuel);
 		getriebe.getItems().addAll(getr);
-		
+		fahrgstellnmre.setText(" "+fahrgestellnmr);
+		hbre.setText(" "+Integer.toString(hubraume));
 	}
 	
 	
@@ -125,6 +119,12 @@ public class SceneEditCarController {
 		zulassung = MySQLDatenbankConnection.getDate("SELECT `Erstzulassung` FROM `cardata` WHERE `CarID` = " + carid);
 		DateTimeFormatter formatters = DateTimeFormatter.ofPattern("dd.MM.uuuu");
 	    zulass = zulassung.format(formatters);
+	    
+	    herstell = MySQLDatenbankConnection.getString("SELECT `Hersteller` FROM `cardata` WHERE `CarID` = " + carid);
+	    model = MySQLDatenbankConnection.getString("SELECT `Modell` FROM `cardata` WHERE `CarID` = " + carid);
+	    farbcodee = MySQLDatenbankConnection.getString("SELECT `Modell` FROM `cardata` WHERE `CarID` = " + carid);
+	    fahrgestellnmr = MySQLDatenbankConnection.getString("SELECT `Fahrgestellnummer` FROM `cardata` WHERE `CarID` = " + carid);
+	    hubraume = MySQLDatenbankConnection.getInt("SELECT `Hubraum` FROM `cardata` WHERE `CarID` = " + carid);
 	}
 	
 	public void goBack() throws IOException {

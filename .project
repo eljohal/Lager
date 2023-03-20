@@ -20,11 +20,4 @@
 		<nature>org.eclipse.xtext.ui.shared.xtextNature</nature>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 	</natures>
-	<linkedResources>
-		<link>
-			<name>src/application/Overview.fxml</name>
-			<type>1</type>
-			<location>C:/Users/jhaug/eclipse-workspace/ebayLager/src/application/Overview.fxml</location>
-		</link>
-	</linkedResources>
 </projectDescription>
