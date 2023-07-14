@@ -3,7 +3,6 @@ package application;
 import java.io.IOException;
 
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -72,10 +71,9 @@ public class SceneRegisterController {
 	
 	public boolean createUser(String username, String preName, String lastName, String EMail, String Telefonnummer, String Password, String UserBildOrt) throws IOException{
 		
-		int test = MySQLDatenbankConnection.getInt("SELECT `UserID` FROM `userdata` WHERE 1");
+		
 		int i_max = MySQLDatenbankConnection.getInt("SELECT MAX(`UserID`) FROM `userdata` WHERE 1");
 		for(int i = 1;i <= i_max; i++) {
-			test = MySQLDatenbankConnection.getInt("SELECT `UserID` FROM `userdata` WHERE `UserID`='" + i + "'");
 			String compare = MySQLDatenbankConnection.getString("SELECT `Username` FROM `userdata` WHERE `UserID`='" + i + "'");
 			if(compare.equals(username)) {
 				setLabel("Username ist schon vergeben", registerLabel);

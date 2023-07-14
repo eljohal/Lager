@@ -1,7 +1,6 @@
 package application;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -109,7 +108,22 @@ public class MySQLDatenbankConnection {
 		}
 	}
 	
-	
+	public static double getDouble(String qry) {
+		try {
+			PreparedStatement ps = con.prepareStatement(qry);
+			ps.execute();
+			ResultSet st = ps.executeQuery();
+			if (st.next()) {
+			    return st.getDouble(1);
+			}else {
+				return 0;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			return 10;
+			
+		}
+	}
 	
 	
 	public static char[] getCharArray(String qry) {
