@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="anchorid" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="441.0" prefWidth="713.0" style="-fx-background-color: GREY;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.application.SceneGeneralSettingsController">
+   <children>
+      <TextField fx:id="fake" editable="false" layoutX="338.0" layoutY="25.0" prefHeight="25.0" prefWidth="77.0" style="-fx-background-color: GREY;" />
+      <TextField fx:id="picDirTextField" editable="false" layoutX="14.0" layoutY="56.0" prefHeight="25.0" prefWidth="226.0" promptText="Speicherort Bilder" style="-fx-background-color: WHITE;" AnchorPane.topAnchor="55.0" />
+      <Button fx:id="pic" layoutX="261.0" layoutY="56.0" maxWidth="78.0" mnemonicParsing="false" onAction="#picDir" prefHeight="26.0" prefWidth="78.0" style="-fx-background-radius: 5 5 5 5; -fx-background-color: WHITE;" text="öffnen" textAlignment="CENTER" AnchorPane.topAnchor="55.0">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </Button>
+      <TextField fx:id="csvTextField" editable="false" layoutX="14.0" layoutY="92.0" prefHeight="25.0" prefWidth="226.0" promptText="Ebay Kategorie CSV Import" style="-fx-background-color: WHITE;" AnchorPane.topAnchor="90.0" />
+      <Button fx:id="csvImportButton" layoutX="261.0" layoutY="92.0" maxWidth="78.0" mnemonicParsing="false" onAction="#csvImport" prefHeight="26.0" prefWidth="78.0" style="-fx-background-radius: 5 5 5 5; -fx-background-color: WHITE;" text="öffnen" textAlignment="CENTER" AnchorPane.topAnchor="90.0">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </Button>
+      <Button fx:id="carManufactor" layoutX="14.0" layoutY="132.0" mnemonicParsing="false" onAction="#getCarManufactor" prefHeight="25.0" prefWidth="297.0" style="-fx-background-color: WHITE;" text="Fahrzeugherstellervorschläge bearb." textAlignment="CENTER" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="125.0" />
+      <Button fx:id="carModell" layoutX="14.0" layoutY="157.0" mnemonicParsing="false" onAction="#getCarModell" prefHeight="25.0" prefWidth="297.0" style="-fx-background-color: WHITE;" text="Fahrzeugmodellvorschläge bearb." textAlignment="CENTER" AnchorPane.topAnchor="160.0" />
+      <Button fx:id="carParts" layoutX="14.0" layoutY="196.0" mnemonicParsing="false" onAction="#getCarParts" prefHeight="25.0" prefWidth="297.0" style="-fx-background-color: WHITE;" text="Fahrzeugteilvorschläge bearb." textAlignment="CENTER" AnchorPane.topAnchor="195.0" />
+      <Button fx:id="carPartsManufactor" layoutX="14.0" layoutY="227.0" mnemonicParsing="false" onAction="#getCarPartsManufactor" prefHeight="25.0" prefWidth="297.0" style="-fx-background-color: WHITE;" text="Fahrzeugteilherstellervorschläge bearb." textAlignment="CENTER" AnchorPane.topAnchor="230.0" />
+      <Button fx:id="settings" layoutY="2.0" mnemonicParsing="false" onAction="#goToSettings" prefHeight="25.0" prefWidth="125.0" style="-fx-background-color: WHITE; -fx-background-radius: 0 0 5 5;" text="Persönliche Daten" textAlignment="CENTER" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
+      <Button fx:id="generalSettings" disable="true" layoutX="136.0" layoutY="11.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="125.0" style="-fx-background-color: WHITE; -fx-background-radius: 0 0 5 5;" text="Allg. Einstellungen" textAlignment="CENTER" AnchorPane.leftAnchor="126.0" AnchorPane.topAnchor="0.0" />
+      <Button fx:id="historie" layoutX="262.0" layoutY="10.0" mnemonicParsing="false" onAction="#goToHistory" prefHeight="25.0" prefWidth="125.0" style="-fx-background-color: WHITE; -fx-background-radius: 0 0 5 5;" text="Historie" textAlignment="CENTER" AnchorPane.leftAnchor="252.0" AnchorPane.topAnchor="0.0" />
+      <Button fx:id="help" layoutX="387.0" layoutY="10.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="125.0" style="-fx-background-color: WHITE; -fx-background-radius: 0 0 5 5;" text="Help" textAlignment="CENTER" AnchorPane.leftAnchor="378.0" AnchorPane.rightAnchor="210.0" AnchorPane.topAnchor="0.0" />
+      <Button fx:id="logout" layoutX="512.0" layoutY="12.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="125.0" style="-fx-background-color: WHITE; -fx-background-radius: 0 0 5 5;" text="Logout" textAlignment="CENTER" AnchorPane.rightAnchor="84.0" AnchorPane.topAnchor="0.0" />
+      <Button fx:id="abbrechen" layoutX="596.0" layoutY="56.0" mnemonicParsing="false" onAction="#goBack" prefHeight="25.0" prefWidth="83.0" style="-fx-background-color: WHITE; -fx-background-radius: 0 0 5 5;" text="Abbr." textAlignment="CENTER" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+      <Button fx:id="possiblePos" layoutX="14.0" layoutY="262.0" mnemonicParsing="false" onAction="#getPoPo" prefHeight="25.0" prefWidth="297.0" style="-fx-background-color: WHITE;" text="Positionen" textAlignment="CENTER" AnchorPane.topAnchor="265.0" />
+      <Button fx:id="possibleZustand" layoutX="14.0" layoutY="299.0" mnemonicParsing="false" onAction="#getZustand" prefHeight="25.0" prefWidth="297.0" style="-fx-background-color: WHITE;" text="Zustand" textAlignment="CENTER" AnchorPane.topAnchor="300.0" />
+      <Button fx:id="possibleProd" layoutX="14.0" layoutY="334.0" mnemonicParsing="false" onAction="#getProdukt" prefHeight="25.0" prefWidth="297.0" style="-fx-background-color: WHITE;" text="Produktart" textAlignment="CENTER" AnchorPane.topAnchor="335.0" />
+      <Button fx:id="possibleFarbe" layoutX="14.0" layoutY="367.0" mnemonicParsing="false" onAction="#getFarbe" prefHeight="25.0" prefWidth="297.0" style="-fx-background-color: WHITE;" text="Farbe" textAlignment="CENTER" AnchorPane.topAnchor="370.0" />
+   </children>
+</AnchorPane>

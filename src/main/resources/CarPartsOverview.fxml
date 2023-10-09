@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.TextFlow?>
+
+<AnchorPane fx:id="createcar" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="775.0" prefWidth="980.0" style="-fx-background-color: GREY;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.application.SceneCarPartsController">
+   <children>
+      <Button fx:id="abbrechen" layoutX="369.0" layoutY="713.0" mnemonicParsing="false" onAction="#goBack" prefHeight="25.0" prefWidth="130.0" style="-fx-background-color: WHITE;" text="Abbrechen" textAlignment="CENTER" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="15.0" />
+      <Label layoutX="25.0" layoutY="5.0" prefHeight="45.0" prefWidth="370.0" text="Fahrzeugteile" AnchorPane.topAnchor="0.0">
+         <font>
+            <Font name="Arial" size="33.0" />
+         </font>
+      </Label>
+      <TextFlow fx:id="textshow" layoutX="14.0" layoutY="518.0" prefHeight="45.0" prefWidth="400.0" textAlignment="CENTER" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="325.0" AnchorPane.rightAnchor="325.0" />
+      <ImageView fx:id="image" fitHeight="237.0" fitWidth="259.0" layoutX="321.0" layoutY="52.0" pickOnBounds="true" preserveRatio="true" />
+      <Button fx:id="rightpic" layoutX="451.0" layoutY="295.0" maxWidth="25.0" mnemonicParsing="false" onAction="#rightUp" prefHeight="20.0" style="-fx-background-radius: 0 5 5 0; -fx-background-color: WHITE;" text="&gt;" textAlignment="CENTER" AnchorPane.leftAnchor="451.0" AnchorPane.topAnchor="295.0">
+         <font>
+            <Font name="Yu Gothic Regular" size="13.0" />
+         </font>
+      </Button>
+      <Button fx:id="picleft" layoutX="423.0" layoutY="295.0" maxWidth="25.0" mnemonicParsing="false" onAction="#leftDown" prefHeight="20.0" style="-fx-background-radius: 5 0 0 5; -fx-background-color: WHITE;" text="&lt;" textAlignment="CENTER" AnchorPane.leftAnchor="423.0" AnchorPane.topAnchor="295.0">
+         <font>
+            <Font name="Yu Gothic Regular" size="13.0" />
+         </font>
+      </Button>
+      <TextField fx:id="herstelle" editable="false" layoutX="25.0" layoutY="85.0" prefHeight="26.0" prefWidth="226.0" style="-fx-background-color: WHITE; -fx-background-radius: 3;" />
+      <TextField fx:id="model" editable="false" layoutX="25.0" layoutY="120.0" prefHeight="26.0" prefWidth="226.0" style="-fx-background-color: WHITE; -fx-background-radius: 3;" />
+      <TextField fx:id="zulassung" editable="false" layoutX="25.0" layoutY="155.0" prefHeight="26.0" prefWidth="226.0" style="-fx-background-color: WHITE; -fx-background-radius: 3;" />
+      <TextField fx:id="farbcode" editable="false" layoutX="25.0" layoutY="190.0" prefHeight="26.0" prefWidth="226.0" style="-fx-background-color: WHITE; -fx-background-radius: 3;" />
+      <TextField fx:id="fahrgestellnummer" editable="false" layoutX="25.0" layoutY="225.0" prefHeight="26.0" prefWidth="226.0" style="-fx-background-color: WHITE; -fx-background-radius: 3;" />
+      <TextField fx:id="hubraum" editable="false" layoutX="25.0" layoutY="260.0" prefHeight="26.0" prefWidth="226.0" style="-fx-background-color: WHITE; -fx-background-radius: 3;" AnchorPane.topAnchor="260.0" />
+      <TextField fx:id="kilometerstan" editable="false" layoutX="25.0" layoutY="294.0" prefHeight="26.0" prefWidth="226.0" style="-fx-background-color: WHITE; -fx-background-radius: 3;" AnchorPane.topAnchor="295.0" />
+      <TableView fx:id="caroverview" layoutX="13.0" layoutY="331.0" prefHeight="366.0" prefWidth="927.0" style="-fx-background-radius: 5;" AnchorPane.bottomAnchor="78.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0">
+         <columns>
+            <TableColumn id="id" fx:id="carpartsid" prefWidth="50.0" text="TeileNr." />
+            <TableColumn id="manufactor" fx:id="artikelname" prefWidth="304.0" text="Bezeichnung" />
+            <TableColumn id="modell" fx:id="hersteller" prefWidth="182.0" text="Hersteller" />
+            <TableColumn fx:id="oriT" prefWidth="197.0" text="Orig. TeileNr." />
+            <TableColumn fx:id="zustand" prefWidth="134.4000244140625" text="Zustand" />
+            <TableColumn fx:id="preis" prefWidth="80.800048828125" text="Preis" />
+         </columns>
+      </TableView>
+      <Button fx:id="change" layoutX="251.0" layoutY="735.0" mnemonicParsing="false" onAction="#editCarPart" prefHeight="25.0" prefWidth="130.0" style="-fx-background-color: WHITE;" text="Fahrzeugteil bearb." textAlignment="CENTER" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="15.0" />
+      <Button fx:id="label" layoutX="821.0" layoutY="704.0" mnemonicParsing="false" onAction="#print" prefHeight="25.0" prefWidth="130.0" style="-fx-background-color: WHITE;" text="Label drucken" textAlignment="CENTER" AnchorPane.bottomAnchor="45.0" AnchorPane.rightAnchor="15.0" />
+      <Button fx:id="add" layoutX="14.0" layoutY="735.0" mnemonicParsing="false" onAction="#addTeil" prefHeight="25.0" prefWidth="130.0" style="-fx-background-color: WHITE;" text="Fahrzeugteil hinzuf." textAlignment="CENTER" AnchorPane.bottomAnchor="45.0" AnchorPane.leftAnchor="15.0" />
+      <Button fx:id="exportCSVP" layoutX="586.0" layoutY="735.0" mnemonicParsing="false" onAction="#exportCSV" prefHeight="25.0" prefWidth="130.0" style="-fx-background-color: WHITE;" text="CSV Export Prd." textAlignment="CENTER" AnchorPane.bottomAnchor="45.0" AnchorPane.rightAnchor="160.0" />
+      <Button fx:id="carpart" disable="true" layoutX="749.0" layoutY="274.0" mnemonicParsing="false" onAction="#editCarPart" text="Button" visible="false" />
+      <Button fx:id="duplicate" layoutX="295.0" layoutY="735.0" mnemonicParsing="false" onAction="#duplicateCarPart" prefHeight="25.0" prefWidth="130.0" style="-fx-background-color: WHITE;" text="Fahrzeugteil dupl." textAlignment="CENTER" AnchorPane.bottomAnchor="45.0" AnchorPane.leftAnchor="160.0" />
+      <Button fx:id="delete" layoutX="425.0" layoutY="735.0" mnemonicParsing="false" onAction="#deleteCarPart" prefHeight="25.0" prefWidth="130.0" style="-fx-background-color: WHITE;" text="Fahrzeugteil entf." textAlignment="CENTER" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="160.0" />
+      <Button fx:id="exportCSVM" layoutX="600.0" layoutY="705.0" mnemonicParsing="false" onAction="#exportProduktMerkmaleCSV" onDragDropped="#handleDrop" onDragOver="#handleDragOver" prefHeight="25.0" prefWidth="130.0" style="-fx-background-color: WHITE;" text="CSV Export Mkm." textAlignment="CENTER" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="160.0" />
+      <TextField fx:id="caid" editable="false" layoutX="25.0" layoutY="52.0" prefHeight="25.0" prefWidth="226.0" style="-fx-background-color: WHITE;" AnchorPane.topAnchor="52.0" />
+      <TextField fx:id="gesamtPreisTextField" editable="false" layoutX="739.0" layoutY="260.0" prefHeight="26.0" prefWidth="226.0" style="-fx-background-color: WHITE; -fx-background-radius: 3;" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="260.0" />
+      <TextField fx:id="filterField" layoutX="543.0" layoutY="295.0" prefHeight="25.0" prefWidth="425.0" promptText="Suchen" style="-fx-background-color: WHITE;" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="294.0" />
+   </children>
+</AnchorPane>

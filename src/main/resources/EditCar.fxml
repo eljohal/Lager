@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.TextFlow?>
+
+<AnchorPane fx:id="editcar" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="514.0" style="-fx-background-color: GREY;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.application.SceneEditCarController">
+	<children>
+		<TextField fx:id="fake" editable="false" layoutX="328.0" layoutY="15.0" prefHeight="25.0" prefWidth="77.0" style="-fx-background-color: GREY;" />
+		<TextField fx:id="hersteller" layoutX="266.0" layoutY="148.0" prefHeight="25.0" prefWidth="226.0" promptText="Hersteller" style="-fx-background-color: WHITE; -fx-background-radius: 3;" AnchorPane.rightAnchor="22.0" AnchorPane.topAnchor="148.0" />
+		<TextField fx:id="modell" layoutX="266.0" layoutY="183.0" prefHeight="25.0" prefWidth="226.0" promptText="Modell" style="-fx-background-color: WHITE;" AnchorPane.rightAnchor="22.0" AnchorPane.topAnchor="183.0" />
+		<DatePicker fx:id="erstzulassung" layoutX="266.0" layoutY="218.0" prefHeight="25.0" prefWidth="226.0" promptText="Erstzulassung" style="-fx-background-color: white;" AnchorPane.rightAnchor="22.0" AnchorPane.topAnchor="218.0" />
+		<TextField fx:id="farbcode" layoutX="266.0" layoutY="253.0" prefHeight="25.0" prefWidth="226.0" promptText="Farbcode" style="-fx-background-color: WHITE;" AnchorPane.rightAnchor="22.0" AnchorPane.topAnchor="253.0" />
+		<TextField fx:id="fahrgestellnummer" layoutX="266.0" layoutY="288.0" prefHeight="25.0" prefWidth="226.0" promptText="Fahrgestellnummer" style="-fx-background-color: WHITE;" AnchorPane.rightAnchor="22.0" AnchorPane.topAnchor="288.0" />
+		<TextField fx:id="hubraum" layoutX="266.0" layoutY="323.0" prefHeight="25.0" prefWidth="226.0" promptText="Hubraum" style="-fx-background-color: WHITE;" AnchorPane.rightAnchor="22.0" AnchorPane.topAnchor="323.0" />
+		<TextField fx:id="kilometer" layoutX="266.0" layoutY="358.0" prefHeight="25.0" prefWidth="226.0" promptText="Kilometerstand (km)" style="-fx-background-color: WHITE;" AnchorPane.rightAnchor="22.0" AnchorPane.topAnchor="358.0" />
+		<ComboBox fx:id="getriebe" layoutX="266.0" layoutY="393.0" prefHeight="25.0" prefWidth="226.0" promptText="Getriebeart" style="-fx-background-color: white;" AnchorPane.rightAnchor="22.0" AnchorPane.topAnchor="393.0" />
+		<TextField fx:id="getriebecode" layoutX="266.0" layoutY="428.0" prefHeight="25.0" prefWidth="226.0" promptText="Getriebecode" style="-fx-background-color: WHITE;" AnchorPane.rightAnchor="22.0" AnchorPane.topAnchor="428.0" />
+		<ComboBox fx:id="kraftstoff" layoutX="266.0" layoutY="463.0" prefHeight="26.0" prefWidth="226.0" promptText="Kraftstoff" style="-fx-background-color: white;" AnchorPane.rightAnchor="22.0" AnchorPane.topAnchor="463.0" />
+		<TextField fx:id="leistung" layoutX="266.0" layoutY="498.0" prefHeight="25.0" prefWidth="226.0" promptText="Leistung (kW)" style="-fx-background-color: WHITE;" AnchorPane.rightAnchor="22.0" AnchorPane.topAnchor="498.0" />
+		<TextField fx:id="motorcode" layoutX="266.0" layoutY="533.0" prefHeight="25.0" prefWidth="226.0" promptText="Motorcode" style="-fx-background-color: WHITE;" AnchorPane.rightAnchor="22.0" AnchorPane.topAnchor="533.0" />
+		<TextField fx:id="tuercount" layoutX="266.0" layoutY="568.0" prefHeight="25.0" prefWidth="226.0" promptText="Türenanzahl" style="-fx-background-color: WHITE;" AnchorPane.rightAnchor="22.0" AnchorPane.topAnchor="568.0" />
+		<Button fx:id="abbrechen" layoutX="324.0" layoutY="611.0" mnemonicParsing="false" onAction="#goBack" prefHeight="25.0" prefWidth="130.0" style="-fx-background-color: WHITE;" text="Abbrechen" textAlignment="CENTER" AnchorPane.rightAnchor="60.0" AnchorPane.topAnchor="611.0" />
+		<Label layoutX="25.0" layoutY="5.0" prefHeight="45.0" prefWidth="370.0" text="Fahrzeug bearbeiten" AnchorPane.topAnchor="0.0">
+			<font>
+				<Font name="Arial" size="33.0" />
+			</font>
+		</Label>
+		<TextFlow fx:id="show" layoutX="15.0" layoutY="92.0" prefHeight="45.0" prefWidth="400.0" textAlignment="CENTER" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="92.0" />
+		<Button fx:id="add" layoutX="60.0" layoutY="611.0" mnemonicParsing="false" onAction="#addCar" prefHeight="25.0" prefWidth="130.0" style="-fx-background-color: WHITE;" text="Fahrzeug bearbeiten" textAlignment="CENTER" AnchorPane.leftAnchor="60.0" AnchorPane.topAnchor="611.0" />
+				<Label fx:id="herstelle" layoutX="25.0" layoutY="147.0" prefHeight="26.0" prefWidth="226.0" style="-fx-background-color: WHITE; -fx-background-radius: 3;" />
+      <Label fx:id="modle" layoutX="25.0" layoutY="182.0" prefHeight="26.0" prefWidth="226.0" style="-fx-background-color: WHITE; -fx-background-radius: 3;" />
+      <Label fx:id="zulassge" layoutX="25.0" layoutY="217.0" prefHeight="26.0" prefWidth="226.0" style="-fx-background-color: WHITE; -fx-background-radius: 3;" />
+      <Label fx:id="farbcde" layoutX="25.0" layoutY="252.0" prefHeight="26.0" prefWidth="226.0" style="-fx-background-color: WHITE; -fx-background-radius: 3;" />
+      <Label fx:id="fahrgstellnmre" layoutX="25.0" layoutY="287.0" prefHeight="26.0" prefWidth="226.0" style="-fx-background-color: WHITE; -fx-background-radius: 3;" />
+      <Label fx:id="hbre" layoutX="25.0" layoutY="322.0" prefHeight="26.0" prefWidth="226.0" style="-fx-background-color: WHITE; -fx-background-radius: 3;" />
+      <Label fx:id="kmstande" layoutX="25.0" layoutY="357.0" prefHeight="26.0" prefWidth="226.0" style="-fx-background-color: WHITE; -fx-background-radius: 3;" />
+      <Label fx:id="getriebee" layoutX="25.0" layoutY="392.0" prefHeight="26.0" prefWidth="226.0" style="-fx-background-color: WHITE; -fx-background-radius: 3;" />
+      <Label fx:id="getriebcoe" layoutX="25.0" layoutY="427.0" prefHeight="26.0" prefWidth="226.0" style="-fx-background-color: WHITE; -fx-background-radius: 3;" />
+      <Label fx:id="krftstfe" layoutX="25.0" layoutY="462.0" prefHeight="26.0" prefWidth="226.0" style="-fx-background-color: WHITE; -fx-background-radius: 3;" />
+      <Label fx:id="lste" layoutX="25.0" layoutY="497.0" prefHeight="26.0" prefWidth="226.0" style="-fx-background-color: WHITE; -fx-background-radius: 3;" />
+      <Label fx:id="motrcde" layoutX="25.0" layoutY="532.0" prefHeight="26.0" prefWidth="226.0" style="-fx-background-color: WHITE; -fx-background-radius: 3;" />
+      <Label fx:id="tuerze" layoutX="25.0" layoutY="567.0" prefHeight="26.0" prefWidth="226.0" style="-fx-background-color: WHITE; -fx-background-radius: 3;" />
+      <ComboBox fx:id="versionSelection" layoutX="266.0" layoutY="55.0" prefHeight="25.0" prefWidth="226.0" promptText="andere Version verwenden" style="-fx-background-color: white;" />
+      <TextField fx:id="capid" editable="false" layoutX="25.0" layoutY="54.0" prefHeight="26.0" prefWidth="226.0" style="-fx-background-color: WHITE; -fx-background-radius: 3;" />
+	</children>
+</AnchorPane>
