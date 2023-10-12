@@ -26,7 +26,7 @@
       <ComboBox fx:id="eBaySpannungEinheit" layoutX="347.0" layoutY="459.0" prefHeight="25.0" prefWidth="70.0" promptText="E (V)" style="-fx-background-color: white;" AnchorPane.leftAnchor="347.0" AnchorPane.topAnchor="459.0" />
       <TextField fx:id="eBayStrom" layoutX="422.0" layoutY="459.0" prefHeight="25.0" prefWidth="35.0" promptText="I" style="-fx-background-color: WHITE;" AnchorPane.leftAnchor="422.0" AnchorPane.topAnchor="459.0" />
       <ComboBox fx:id="ebayStromEinheit" layoutX="462.0" layoutY="459.0" prefHeight="25.0" prefWidth="70.0" promptText="E (A)" style="-fx-background-color: white;" AnchorPane.leftAnchor="462.0" AnchorPane.topAnchor="459.0" />
-      <TextField id="txtFld" fx:id="eCat" layoutX="25.0" layoutY="494.0" prefHeight="25.0" prefWidth="226.0" promptText="Ebay Kategorie (*)" style="-fx-background-color: WHITE;" AnchorPane.leftAnchor="25.0" AnchorPane.topAnchor="494.0" />
+      <TextField id="txtFld" fx:id="eCat" layoutX="25.0" layoutY="494.0" prefHeight="25.0" prefWidth="226.0" promptText="ebay Kategorie (*)" style="-fx-background-color: WHITE;" AnchorPane.leftAnchor="25.0" AnchorPane.topAnchor="494.0" />
       <Button fx:id="getEbayCatButton" layoutX="261.0" layoutY="494.0" maxWidth="25.0" mnemonicParsing="false" onAction="#getEbayCat" prefHeight="20.0" style="-fx-background-radius: 0 5 5 0; -fx-background-color: WHITE;" text="&gt;" textAlignment="CENTER" AnchorPane.leftAnchor="261.0" AnchorPane.topAnchor="494.0">
          <font>
             <Font name="Yu Gothic Regular" size="13.0" />
@@ -34,9 +34,8 @@
       </Button>
       <TextField fx:id="passtAuch" layoutX="304.0" layoutY="494.0" prefHeight="25.0" prefWidth="226.0" promptText="passend für (*)" style="-fx-background-color: WHITE;" AnchorPane.leftAnchor="307.0" AnchorPane.topAnchor="494.0" />
       <TextField fx:id="preis" layoutX="25.0" layoutY="529.0" prefHeight="25.0" prefWidth="226.0" promptText="Preis (€)" style="-fx-background-color: WHITE;" AnchorPane.leftAnchor="25.0" AnchorPane.topAnchor="529.0" />
-      <ComboBox fx:id="versandDE" layoutX="25.0" layoutY="564.0" prefHeight="25.0" prefWidth="226.0" promptText="Versand Deutschland" style="-fx-background-color: white;" AnchorPane.leftAnchor="25.0" AnchorPane.topAnchor="564.0" />
-      <ComboBox fx:id="versandEU" layoutX="25.0" layoutY="599.0" prefHeight="25.0" prefWidth="226.0" promptText="Versand Europa" style="-fx-background-color: white;" AnchorPane.leftAnchor="25.0" AnchorPane.topAnchor="599.0" />
-      <TextField fx:id="anzahl" layoutX="25.0" layoutY="634.0" prefHeight="25.0" prefWidth="226.0" promptText="Menge" style="-fx-background-color: WHITE;" AnchorPane.leftAnchor="25.0" AnchorPane.topAnchor="634.0" />
+      <ComboBox fx:id="versandDE" layoutX="25.0" layoutY="564.0" prefHeight="25.0" prefWidth="226.0" promptText="Versand" style="-fx-background-color: white;" AnchorPane.leftAnchor="25.0" AnchorPane.topAnchor="564.0" />
+      <TextField fx:id="anzahl" layoutX="25.0" layoutY="634.0" prefHeight="25.0" prefWidth="226.0" promptText="Menge (*)" style="-fx-background-color: WHITE;" AnchorPane.leftAnchor="25.0" AnchorPane.topAnchor="599.0" />
       <Button fx:id="reload" layoutX="513.0" layoutY="669.0" maxWidth="38.0" mnemonicParsing="false" onAction="#reload" prefHeight="25.0" prefWidth="35.0" style="-fx-background-radius: 5 5 5 5; -fx-background-color: WHITE;" text="⟳" textAlignment="CENTER" AnchorPane.leftAnchor="513.0" AnchorPane.topAnchor="669.0">
          <font>
             <Font name="Yu Gothic Regular" size="13.0" />

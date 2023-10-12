@@ -103,10 +103,7 @@ public class SceneAddCarPartController {
 	TextField preis;
 	@FXML
 	private ComboBox<String> versandDE;
-	private String[] versandD = {"S", "M", "L", "weiter..."};
-	@FXML
-	private ComboBox<String> versandEU;
-	private String[] versandE = {"S", "M", "L", "weiter..."};
+	private String[] versandD = {"","XS","S", "M", "L", "XL","XXL"};
 	@FXML
 	TextField anzahl;
 	@FXML
@@ -163,13 +160,12 @@ public class SceneAddCarPartController {
 	int meng;
 	String vers;
 	String passA;
-	String versEU;
 	int imagecount;
 	
 	Text nothingSelected = new Text("Bitte Titel über Reload Button erstellen");
 	Text missingteil = new Text("Bitte vorher ein Teil auswählen");
 	Text loadingData = new Text("Bitte warten, eBay Kategorieliste wird noch geladen");
-	Text nothingSelectedKategorie = new Text("Bitte EBay Kategorie auswählen");
+	Text nothingSelectedKategorie = new Text("Bitte eBay Kategorie auswählen");
 	Text nothingSelectedMenge = new Text("Bitte Menge angeben");
 	Text nothingSelectedPassendFuer = new Text("Bitte Feld \"passend für\" ausfüllen");
 	
@@ -420,7 +416,6 @@ public class SceneAddCarPartController {
 		versandDE.getItems().addAll(versandD);
 		eBaySpannungEinheit.getItems().addAll(spg);
 		ebayStromEinheit.getItems().addAll(str);
-		versandEU.getItems().addAll(versandE);
 		caid.setText("Fz.Nr.: "+caridFormat.format(carid).toString());
 		modelle = ""+MySQLDatenbankConnection.getString("SELECT `Hersteller` FROM `cardata` WHERE `CarID` = " + carid)+" "+MySQLDatenbankConnection.getString("SELECT `Modell` FROM `cardata` WHERE `CarID` = " + carid);
 		modell.setText("Fahrzeug: "+modelle);
@@ -642,7 +637,6 @@ public class SceneAddCarPartController {
 			eBFarbC = setString(eBayFarbecode);
 			zusta = setString(zust);
 			vers = setStringComboBox(versandDE);
-			versEU = setStringComboBox(versandEU);
 			pr = setDouble(preis);
 			bemer = bemerkung.getText();
 			int i_max = MySQLDatenbankConnection.getInt("SELECT MIN(CarPartID) FROM `carpartsdata` WHERE CarID = "+carid+"");
@@ -653,11 +647,11 @@ public class SceneAddCarPartController {
 			}
 			int y_max = MySQLDatenbankConnection.getInt("SELECT MIN(d1.CPID)+1 FROM `carpartsdata` d1 LEFT JOIN `carpartsdata` d2 ON d1.CPID + 1 = d2.CPID WHERE d2.CPID is NULL");
 			Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-			MySQLDatenbankConnection.update("INSERT INTO `carpartsdata`(`CarPartID`, `Bezeichnung`, `Hersteller`, `OrignalTeilenummer`, `Zustand`, `Bemerkung`, `Kategorienummer`, `Preis`, `Menge`, `Versand`, `eBayProduktart`, `CarID`, `versandEU`, `CPID`, `Teil`, `OENumber`, `eBayPosition`, `eBayFarbe`, `eBayFarbecode`, `Spannung`, `SpannungEinheit`, `Stromstaerke`, `StromstaerkeEinheit`, `Passend`, `Version`) VALUES ('"+i_max+"','"+tite+"','"+herst+"','"+oriT+"','"+zusta+"','"+bemer+"','"+kategorie+"','"+pr+"','"+meng+"','"+vers+"','"+eBProd+"','"+carid+"','"+versEU+"','"+y_max+"','"+teile+"','"+oEN+"','"+eBPos+"','"+eBFarb+"', '"+eBFarbC+"','"+eBSpg+"','"+spgE+"','"+eBStr+"','"+strE+"','"+passA+"','0.00001')");
+			MySQLDatenbankConnection.update("INSERT INTO `carpartsdata`(`CarPartID`, `Bezeichnung`, `Hersteller`, `OrignalTeilenummer`, `Zustand`, `Bemerkung`, `Kategorienummer`, `Preis`, `Menge`, `Versand`, `eBayProduktart`, `CarID`, `versandEU`, `CPID`, `Teil`, `OENumber`, `eBayPosition`, `eBayFarbe`, `eBayFarbecode`, `Spannung`, `SpannungEinheit`, `Stromstaerke`, `StromstaerkeEinheit`, `Passend`, `Version`) VALUES ('"+i_max+"','"+tite+"','"+herst+"','"+oriT+"','"+zusta+"','"+bemer+"','"+kategorie+"','"+pr+"','"+meng+"','"+vers+"','"+eBProd+"','"+carid+"',' ','"+y_max+"','"+teile+"','"+oEN+"','"+eBPos+"','"+eBFarb+"', '"+eBFarbC+"','"+eBSpg+"','"+spgE+"','"+eBStr+"','"+strE+"','"+passA+"','0.00001')");
 			int x_max = MySQLDatenbankConnection.getInt("SELECT MAX(`ChangeID`) FROM `changehistorycarparts` WHERE 1");
 			x_max++;
 			changes = "neu";
-			MySQLDatenbankConnection.update("INSERT INTO `changehistorycarparts`(`CPID`, `UserID`, `TimeStamp`, `ChangeID`, `CarID`, `Changed`, `CarPartID`, `Bezeichnung`, `Hersteller`, `OrignalTeilenummer`, `Zustand`, `Bemerkung`, `Kategorienummer`, `Preis`, `Menge`, `Versand`, `eBayProduktart`, `versandEU`, `Teil`, `OENumber`, `eBayPosition`, `eBayFarbe`, `eBayFarbecode`, `Spannung`, `SpannungEinheit`, `Stromstaerke`, `StromstaerkeEinheit`, `Passend`, `Version`) VALUES ('"+y_max+"','"+User.id+"','"+timestamp+"','"+x_max+"','"+carid+"','"+changes+"','"+i_max+"','"+tite+"','"+herst+"','"+oriT+"','"+zusta+"','"+bemer+"','"+kategorie+"','"+pr+"','"+meng+"','"+vers+"','"+eBProd+"','"+versEU+"','"+teile+"','"+oEN+"','"+eBPos+"','"+eBFarb+"', '"+eBFarbC+"','"+eBSpg+"','"+spgE+"','"+eBStr+"','"+strE+"','"+passA+"','0.00001')");
+			MySQLDatenbankConnection.update("INSERT INTO `changehistorycarparts`(`CPID`, `UserID`, `TimeStamp`, `ChangeID`, `CarID`, `Changed`, `CarPartID`, `Bezeichnung`, `Hersteller`, `OrignalTeilenummer`, `Zustand`, `Bemerkung`, `Kategorienummer`, `Preis`, `Menge`, `Versand`, `eBayProduktart`, `versandEU`, `Teil`, `OENumber`, `eBayPosition`, `eBayFarbe`, `eBayFarbecode`, `Spannung`, `SpannungEinheit`, `Stromstaerke`, `StromstaerkeEinheit`, `Passend`, `Version`) VALUES ('"+y_max+"','"+User.id+"','"+timestamp+"','"+x_max+"','"+carid+"','"+changes+"','"+i_max+"','"+tite+"','"+herst+"','"+oriT+"','"+zusta+"','"+bemer+"','"+kategorie+"','"+pr+"','"+meng+"','"+vers+"','"+eBProd+"',' ','"+teile+"','"+oEN+"','"+eBPos+"','"+eBFarb+"', '"+eBFarbC+"','"+eBSpg+"','"+spgE+"','"+eBStr+"','"+strE+"','"+passA+"','0.00001')");
 			SceneCarPartsController.setCarID(carid);
 			copyImageToDestination(i_max);
 			try {

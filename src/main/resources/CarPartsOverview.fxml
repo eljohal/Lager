@@ -37,14 +37,15 @@
       <TextField fx:id="fahrgestellnummer" editable="false" layoutX="25.0" layoutY="225.0" prefHeight="26.0" prefWidth="226.0" style="-fx-background-color: WHITE; -fx-background-radius: 3;" />
       <TextField fx:id="hubraum" editable="false" layoutX="25.0" layoutY="260.0" prefHeight="26.0" prefWidth="226.0" style="-fx-background-color: WHITE; -fx-background-radius: 3;" AnchorPane.topAnchor="260.0" />
       <TextField fx:id="kilometerstan" editable="false" layoutX="25.0" layoutY="294.0" prefHeight="26.0" prefWidth="226.0" style="-fx-background-color: WHITE; -fx-background-radius: 3;" AnchorPane.topAnchor="295.0" />
-      <TableView fx:id="caroverview" layoutX="13.0" layoutY="331.0" prefHeight="366.0" prefWidth="927.0" style="-fx-background-radius: 5;" AnchorPane.bottomAnchor="78.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0">
+      <TableView fx:id="caroverview" layoutX="13.0" layoutY="331.0" prefHeight="366.0" prefWidth="927.0" style="-fx-background-radius: 5;" AnchorPane.bottomAnchor="78.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="331.0">
          <columns>
             <TableColumn id="id" fx:id="carpartsid" prefWidth="50.0" text="TeileNr." />
-            <TableColumn id="manufactor" fx:id="artikelname" prefWidth="304.0" text="Bezeichnung" />
-            <TableColumn id="modell" fx:id="hersteller" prefWidth="182.0" text="Hersteller" />
-            <TableColumn fx:id="oriT" prefWidth="197.0" text="Orig. TeileNr." />
-            <TableColumn fx:id="zustand" prefWidth="134.4000244140625" text="Zustand" />
-            <TableColumn fx:id="preis" prefWidth="80.800048828125" text="Preis" />
+            <TableColumn id="manufactor" fx:id="artikelname" prefWidth="286.0" text="Bezeichnung" />
+            <TableColumn id="modell" fx:id="hersteller" prefWidth="200.0" text="Hersteller" />
+            <TableColumn fx:id="oriT" prefWidth="170.0" text="Orig. TeileNr." />
+            <TableColumn fx:id="zustand" prefWidth="109.0" text="Zustand" />
+            <TableColumn fx:id="preis" prefWidth="68.0" text="Preis" />
+            <TableColumn fx:id="versandTableColumn" prefWidth="66.0" text="Versand" />
          </columns>
       </TableView>
       <Button fx:id="change" layoutX="251.0" layoutY="735.0" mnemonicParsing="false" onAction="#editCarPart" prefHeight="25.0" prefWidth="130.0" style="-fx-background-color: WHITE;" text="Fahrzeugteil bearb." textAlignment="CENTER" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="15.0" />

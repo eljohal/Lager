@@ -86,6 +86,8 @@ public class SceneCarPartsController {
 	@FXML
 	TableColumn<CarParts, Number> preis;
 	@FXML
+	TableColumn<CarParts, String> versandTableColumn;
+	@FXML
 	ImageView image;
 	@FXML
 	TextFlow textshow;
@@ -109,10 +111,13 @@ public class SceneCarPartsController {
 	TextField fahrgestellnummer;
 	@FXML
 	TextField gesamtPreisTextField;
-	BigDecimal gesamtPreis = new BigDecimal("0");
+	static BigDecimal gesamtPreis;
 	static BigDecimal substract = new BigDecimal("0");
+	static BigDecimal mengeRemove;
+	static String search;
 	LocalDate zulassun;
 	static int carid;
+	static int caridOLD;
 	static String zulass;
 	int imagecount;
 	@FXML
@@ -212,8 +217,7 @@ public class SceneCarPartsController {
 	}
 	
 	public Path createDir(int carid) throws IOException {
-		//Path path = Paths.get("C:\\Users\\jhaug\\Desktop\\TestBilder\\" + filename.format(carid));
-
+		
 		Path path = Paths.get(PictureDirectory.getDir()+ "\\" + filename.format(carid));
 		if(!Files.exists(path)) {
 			Files.createDirectories(path);
@@ -222,12 +226,12 @@ public class SceneCarPartsController {
 		return path;
 	}
 	
-	public BigDecimal setGesamtPreis(BigDecimal preis) {
-		gesamtPreis = gesamtPreis.add(preis);
+	public static BigDecimal setGesamtPreis(BigDecimal preis, BigDecimal menge) {
+		gesamtPreis = gesamtPreis.add(preis.multiply(menge));
 		return gesamtPreis;
 	}
-	public BigDecimal substractGesamtPreis(BigDecimal preis) {
-		gesamtPreis = gesamtPreis.subtract(preis);
+	public static BigDecimal substractGesamtPreis(BigDecimal preis, BigDecimal menge) {
+		gesamtPreis = gesamtPreis.subtract(preis.multiply(menge));
 		return gesamtPreis;
 	}
 	
@@ -235,26 +239,49 @@ public class SceneCarPartsController {
 		gesamtPreisTextField.setText("Preis (gesamt): " + gesamtPreis + " €");
 	}
 	
-	ObservableList<CarParts> carpartdata = FXCollections.observableArrayList();
-	
+	static ObservableList<CarParts> carpartdata = FXCollections.observableArrayList();
 	public ObservableList<CarParts> getCarData(){
+		if(carid != caridOLD) {
+			carpartdata.clear();
+			gesamtPreis = new BigDecimal("0");
+		}
 		
-		//ObservableList<CarParts> carpartdata = FXCollections.observableArrayList();
-		int carpartid;
 		int i_max = MySQLDatenbankConnection.getInt("SELECT MAX(CarPartID) FROM `carpartsdata` WHERE `CarID` = '"+carid+"'");
-		for(int i = 1;i <= i_max; i++) {
-			carpartid = MySQLDatenbankConnection.getInt("SELECT `CarPartID` FROM `carpartsdata` WHERE `CarPartID` = '" + i + "' AND `CarID` = "+carid+"");
-			String bezeich = MySQLDatenbankConnection.getString("SELECT `Bezeichnung` FROM `carpartsdata` WHERE `CarPartID` = '" + i + "' AND `CarID` = "+carid+"");
-			String herst = MySQLDatenbankConnection.getString("SELECT `Hersteller` FROM `carpartsdata` WHERE `CarPartID` = '" + i + "' AND `CarID` = "+carid+"");
-			String zstd = MySQLDatenbankConnection.getString("SELECT `Zustand` FROM `carpartsdata` WHERE `CarPartID` = '" + i + "' AND `CarID` = "+carid+"");
-			String oriT = MySQLDatenbankConnection.getString("SELECT `OrignalTeilenummer` FROM `carpartsdata` WHERE `CarPartID` = '" + i + "' AND `CarID` = "+carid+"");
-			double pre = MySQLDatenbankConnection.getDouble("SELECT `Preis` FROM `carpartsdata` WHERE `CarPartID` = '" + i + "' AND `CarID` = "+carid+"");
-			if(carpartid != 0) {
-				carpartdata.add(new CarParts(carpartid,bezeich,zstd,herst,oriT,pre));
-				setGesamtPreis(BigDecimal.valueOf(pre));
+		if(carpartdata.size() != i_max) {
+			for(int i = 1;i <= i_max; i++) {
+				int carpartid = MySQLDatenbankConnection.getInt("SELECT `CPID` FROM `carpartsdata` WHERE `CarPartID` = '" + i + "' AND `CarID` = "+carid+"");
+				boolean isCarPartIdInList = carpartdata.stream()
+					    .anyMatch(carPart -> carPart.getCarPartsCPID().get() == carpartid);
+				if(!isCarPartIdInList) {
+					String bezeich = MySQLDatenbankConnection.getString("SELECT `Bezeichnung` FROM `carpartsdata` WHERE `CarPartID` = '" + i + "' AND `CarID` = "+carid+"");
+					String herst = MySQLDatenbankConnection.getString("SELECT `Hersteller` FROM `carpartsdata` WHERE `CarPartID` = '" + i + "' AND `CarID` = "+carid+"");
+					String zstd = MySQLDatenbankConnection.getString("SELECT `Zustand` FROM `carpartsdata` WHERE `CarPartID` = '" + i + "' AND `CarID` = "+carid+"");
+					String oriT = MySQLDatenbankConnection.getString("SELECT `OrignalTeilenummer` FROM `carpartsdata` WHERE `CarPartID` = '" + i + "' AND `CarID` = "+carid+"");
+					double pre = MySQLDatenbankConnection.getDouble("SELECT `Preis` FROM `carpartsdata` WHERE `CarPartID` = '" + i + "' AND `CarID` = "+carid+"");
+					String versand = MySQLDatenbankConnection.getString("SELECT `Versand` FROM `carpartsdata` WHERE `CarPartID` = '" + i + "' AND `CarID` = "+carid+"");
+					int menge = MySQLDatenbankConnection.getInt("SELECT `Menge` FROM `carpartsdata` WHERE `CarPartID` = '" + i + "' AND `CarID` = "+carid+"");
+					if(carpartid != 0) {
+						carpartdata.add(new CarParts(i,carpartid,bezeich,zstd,herst,oriT,pre,versand,menge));
+						setGesamtPreis(BigDecimal.valueOf(pre),BigDecimal.valueOf(menge));
+					}
+				}
 			}
-		}				
+		}
 		return carpartdata;
+	}
+	public static void editInCarPartData(CarParts carpart) {
+		for (int i = 0; i < carpartdata.size(); i++) {
+		    CarParts carPart = carpartdata.get(i);
+		    if (carPart.getCarPartsCPID().get() == carpart.getCarPartsCPID().get()) {
+		        if (!carPart.equals(carpart)) {
+		        	substractGesamtPreis(BigDecimal.valueOf(carPart.getCarPartsPreis().get()),BigDecimal.valueOf(carPart.getCarPartsMenge().get()));
+		        	carpartdata.set(i, carpart);
+		        	setGesamtPreis(BigDecimal.valueOf(carpart.getCarPartsPreis().get()),BigDecimal.valueOf(carpart.getCarPartsMenge().get()));
+		        	break;
+		        }
+		    }
+		}
+		
 	}
 	private void copyToClipboard(String text) {
         final Clipboard clipboard = Clipboard.getSystemClipboard();
@@ -262,6 +289,13 @@ public class SceneCarPartsController {
         content.putString(text);
         clipboard.setContent(content);
     }
+	
+	public void initTableViewSortingDescending() {
+		carpartsid.setSortType(TableColumn.SortType.DESCENDING);
+		caroverview.getSortOrder().add(carpartsid);
+		caroverview.setSortPolicy(param -> true);
+	}
+	
 	@FXML 
 	void initialize() throws IOException {
 		checkChanges.sceneCarParts(this);
@@ -273,6 +307,7 @@ public class SceneCarPartsController {
 		oriT.setCellValueFactory(cellData -> cellData.getValue().getCarPartsOriTeilNr());
 		zustand.setCellValueFactory(cellData -> cellData.getValue().getCarPartsZustand());
 		preis.setCellValueFactory(cellData -> cellData.getValue().getCarPartsPreis());
+		versandTableColumn.setCellValueFactory(cellData -> cellData.getValue().getCarPartsVersand());
 		oriStag.setOnCloseRequest(event -> {
             event.consume(); // Verhindert das sofortige Schließen des Hauptfensters
             try {
@@ -335,9 +370,7 @@ public class SceneCarPartsController {
 		DateTimeFormatter formatters = DateTimeFormatter.ofPattern("dd.MM.uuuu");
 		zulass = zulassun.format(formatters);
 		zulassung.setText("Zulassung: "+zulass);
-		carpartsid.setSortType(TableColumn.SortType.DESCENDING);
-		caroverview.getSortOrder().add(carpartsid);
-		caroverview.setSortPolicy(param -> true);
+		initTableViewSortingDescending();
 		setPreis();
 		filter();
 	}
@@ -345,10 +378,17 @@ public class SceneCarPartsController {
 	public void versionErrorChangesCount() {
 		checkChanges.pauseCarPartsChangesThread();
 		if(checkChanges.carPartsChanges.isShutdown()) {
-			carpartdata.clear();
-			caroverview.refresh();
-			setCarPartsList();
-			startThread();
+			//carpartdata.clear();
+			Platform.runLater(() -> {
+				getCarData();
+				caroverview.setItems(carpartdata);
+				carpartsid.setSortType(TableColumn.SortType.DESCENDING);
+				caroverview.getSortOrder().add(carpartsid);
+				caroverview.setSortPolicy(param -> true);
+				filter();
+				setPreis();
+				startThread();
+			});
 		}	
 	}
 	
@@ -444,26 +484,31 @@ public class SceneCarPartsController {
 	public void filter() {
 
 		FilteredList<CarParts> filteredData = new FilteredList<>(carpartdata, b -> true);
+		filterField.setText(search);
+		filteredList(filterField, filteredData, search);
 		filterField.textProperty().addListener((observable, oldValue, newValue) -> {
-			filteredData.setPredicate(carPart -> {
-				if (newValue == null || newValue.isEmpty()) {
-					return true;
-				}
-				
-				String lowerCaseFilter = newValue.toLowerCase();
-				
-				if(carPart.getCarPartsID().toString().toLowerCase().indexOf(lowerCaseFilter) != -1) {
-					return true;
-				}else if (carPart.getCarPartsName().toString().toLowerCase().indexOf(lowerCaseFilter) != -1) {
-					return true;
-				}else {
-					return false;
-				}
-			});
+			filteredList(filterField, filteredData, newValue);
+			search = newValue;
 		});
 		SortedList<CarParts> sortedData = new SortedList<>(filteredData);
 		sortedData.comparatorProperty().bind(caroverview.comparatorProperty());
 		caroverview.setItems(sortedData);
+	}
+	
+	public void filteredList(TextField textfield, FilteredList<CarParts> filteredList, String search) {
+		filteredList.setPredicate(carPart -> {
+			if (search == null || textfield.getText().isEmpty()) {
+				return true;
+			}
+			
+			if(carPart.getCarPartsID().toString().toLowerCase().indexOf(search.toLowerCase()) != -1) {
+				return true;
+			}else if (carPart.getCarPartsName().toString().toLowerCase().indexOf(search.toLowerCase()) != -1) {
+				return true;
+			}else {
+				return false;
+			}
+		});
 	}
 	
 	String[] namesEbayMerkmale = {"Hersteller", "Herstellernummer", "OE/OEM Referenznummer(n)", "Produktart", "Einbauposition", "Farbe", "Farbcode", "Spannung", "Stromstärke"};
@@ -614,7 +659,9 @@ public class SceneCarPartsController {
 	public void goBack() throws IOException {
 		checkChanges.pauseCarPartsChangesThread();
 		if(checkChanges.carPartsChanges.isShutdown()) {
+			search = "";
 			closeCheckWindow();
+			caridOLD = carid;
 			root = FXMLLoader.load(getClass().getClassLoader().getResource("Overview.fxml"));
 			stag = (Stage) abbrechen.getScene().getWindow();
 			stag.setScene(new Scene(root));
@@ -641,6 +688,7 @@ public class SceneCarPartsController {
 		if(caroverview.getSelectionModel().getSelectedItem() != null ) {
 			checkChanges.pauseCarPartsChangesThread();
 			if(checkChanges.carPartsChanges.isShutdown()) {
+				caridOLD = carid;
 				SceneRealEditCarPartController.setCarID(carid);
 				stag = (Stage) abbrechen.getScene().getWindow();
 				CarParts ident = caroverview.getSelectionModel().getSelectedItem();
@@ -683,9 +731,11 @@ public class SceneCarPartsController {
 				String herts = MySQLDatenbankConnection.getString("SELECT `Hersteller` FROM `carpartsdata` WHERE `CPID` = "+y_max+"");;
 				String oriTe = MySQLDatenbankConnection.getString("SELECT `OrignalTeilenummer` FROM `carpartsdata` WHERE `CPID` = "+y_max+"");
 				double p = MySQLDatenbankConnection.getDouble("SELECT `Preis` FROM `carpartsdata` WHERE `CPID` ="+y_max+"");
-				setGesamtPreis(BigDecimal.valueOf(p));
+				String vers = MySQLDatenbankConnection.getString("SELECT `Versand` FROM `carpartsdata` WHERE `CPID` ="+y_max+"");
+				int meng = MySQLDatenbankConnection.getInt("SELECT `Menge` FROM `carpartsdata` WHERE `CPID` ="+y_max+"");
+				setGesamtPreis(BigDecimal.valueOf(p),BigDecimal.valueOf(meng));
 				setPreis();
-				carpartdata.add(new CarParts(i_max,bez,zst,herts,oriTe,p));
+				carpartdata.add(new CarParts(i_max, y_max,bez,zst,herts,oriTe,p,vers,meng));
 				startThread();
 			}else {
 				textshow.getChildren().clear();
@@ -721,7 +771,7 @@ public class SceneCarPartsController {
 	
 	public void removeCarPart(int index) throws IOException {
 		if(checkChanges.carPartsChanges.isShutdown()) {
-			substractGesamtPreis(substract);
+			substractGesamtPreis(substract,mengeRemove);
 			substract = BigDecimal.valueOf(0);
 			setPreis();
 			int id = carpartdata.get(index).getCarPartsID().get();
@@ -744,20 +794,21 @@ public class SceneCarPartsController {
 		checkChanges.pauseCarPartsChangesThread();
 		if(checkChanges.carPartsChanges.isShutdown()) {
 			Platform.runLater(() -> {
-				SceneAddCarPartController.setCarID(carid);
-				stag = (Stage) add.getScene().getWindow();
-				FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("EditCarParts.fxml"));		
 				try {
+					caridOLD = carid;
+					SceneAddCarPartController.setCarID(carid);
+					stag = (Stage) add.getScene().getWindow();
+					FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("EditCarParts.fxml"));		
 					root = loader.load();
-				} catch (IOException e) {
+					SceneAddCarPartController test = loader.getController();
+					scene = new Scene(root);
+					test.getScene(scene);
+					test.getStage(stag);
+					stag.setScene(scene);
+				}catch (IOException e) {
 					// TODO Auto-generated catch block
-					e.printStackTrace();
+					logger.error("Wechsel zu AddCarPart von SceneCarPartsController, addTeil()", e);
 				}
-				SceneAddCarPartController test = loader.getController();
-				scene = new Scene(root);
-				test.getScene(scene);
-				test.getStage(stag);
-				stag.setScene(scene);
 			});
 		}
 	}

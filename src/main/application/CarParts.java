@@ -13,16 +13,22 @@ public class CarParts {
 	private StringProperty herteller;
 	private StringProperty zustand;
 	private StringProperty oriTeilNR;
+	private StringProperty versand;
 	private IntegerProperty artikelnummer;
+	private IntegerProperty cpid;
 	private DoubleProperty preis;
+	private IntegerProperty menge;
 	//Konstruktor
-	public CarParts(int carpartsid, String artikelbez, String zstd, String herst, String oriTeil, double pre) {
+	public CarParts(int carpartsid, int cpid, String artikelbez, String zstd, String herst, String oriTeil, double pre, String versand,int menge) {
 		this.artikelbezeichnung = new SimpleStringProperty(artikelbez);
 		this.zustand = new SimpleStringProperty(zstd);
 		this.herteller = new SimpleStringProperty(herst);
 		this.artikelnummer = new SimpleIntegerProperty(carpartsid);
+		this.cpid = new SimpleIntegerProperty(cpid);
 		this.oriTeilNR = new SimpleStringProperty(oriTeil);
 		this.preis = new SimpleDoubleProperty(pre);
+		this.versand = new SimpleStringProperty(versand);
+		this.menge = new SimpleIntegerProperty(menge);
 	}
 	//Getter
 	public StringProperty getCarPartsName() {
@@ -39,9 +45,22 @@ public class CarParts {
 		return oriTeilNR;
 	}
 	
+	public StringProperty getCarPartsVersand() {
+		return versand;
+	}
+	
 	public IntegerProperty getCarPartsID() {
 		return artikelnummer;
 	}
+	
+	public IntegerProperty getCarPartsMenge() {
+		return menge;
+	}
+	
+	public IntegerProperty getCarPartsCPID() {
+		return cpid;
+	}
+	
 	public DoubleProperty getCarPartsPreis() {
 		return preis;
 	}

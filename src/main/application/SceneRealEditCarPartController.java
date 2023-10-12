@@ -178,19 +178,13 @@ public class SceneRealEditCarPartController {
 	TextField versandDEOri;
 	String oriVDE;
 	@FXML
-	TextField versandEUOri;
-	String oriVEU;
-	@FXML
 	TextField anzahlOri;
 	int oriA;
 	@FXML
 	TextField preis;
 	@FXML
 	private ComboBox<String> versandDE;
-	private String[] versandD = {"S", "M", "L", "weiter..."};
-	@FXML
-	private ComboBox<String> versandEU;
-	private String[] versandE = {"S", "M", "L", "weiter..."};
+	private String[] versandD = {"","XS","S", "M", "L", "XL","XXL"};
 	@FXML
 	TextField anzahl;
 	@FXML
@@ -226,7 +220,6 @@ public class SceneRealEditCarPartController {
 	int cpid;
 	int meng;
 	String vers;
-	String versEU;
 	int imagecount;
 	
 	Text nothingSelected = new Text("Bitte Titel über Reload Button erstellen");
@@ -501,7 +494,6 @@ public class SceneRealEditCarPartController {
 		eCatOri.setText(""+Integer.toString(oriECat));
 		preisOri.setText(""+doubleToString(oriPreis));
 		versandDEOri.setText(""+oriVDE);
-		versandEUOri.setText(""+oriVEU);
 		anzahlOri.setText(""+Integer.toString(oriA));
 		passendOri.setText(oriPassend);
 		
@@ -511,8 +503,6 @@ public class SceneRealEditCarPartController {
 		spgE.getItems().addAll(spgValue);
 		versandDE.getItems().clear();
 		versandDE.getItems().addAll(versandD);
-		versandEU.getItems().clear();
-		versandEU.getItems().addAll(versandE);
 		
 		caid.setText("Fz.Nr.: "+caridFormat.format(carid).toString());
 		modelle = ""+MySQLDatenbankConnection.getString("SELECT `Hersteller` FROM `cardata` WHERE `CarID` = " + carid)+" "+MySQLDatenbankConnection.getString("SELECT `Modell` FROM `cardata` WHERE `CarID` = " + carid);
@@ -535,7 +525,6 @@ public class SceneRealEditCarPartController {
 		oriECat =  MySQLDatenbankConnection.getInt("SELECT `Kategorienummer` FROM `carpartsdata` WHERE `CPID` = "+cpid);
 		oriPreis = MySQLDatenbankConnection.getDouble("SELECT `Preis` FROM `carpartsdata` WHERE `CPID` = " + cpid);
 		oriVDE = MySQLDatenbankConnection.getString("SELECT `Versand` FROM `carpartsdata` WHERE `CPID` = "+cpid);
-		oriVEU = MySQLDatenbankConnection.getString("SELECT `VersandEU` FROM `carpartsdata` WHERE `CPID` = "+cpid);
 		oriA =  MySQLDatenbankConnection.getInt("SELECT `Menge` FROM `carpartsdata` WHERE `CPID` = "+cpid);
 		orioEString = MySQLDatenbankConnection.getString("SELECT `OENumber` FROM `carpartsdata` WHERE `CPID` = "+cpid);
 		orieBProdeString = MySQLDatenbankConnection.getString("SELECT `eBayProduktart` FROM `carpartsdata` WHERE `CPID` = "+cpid);
@@ -559,7 +548,6 @@ public class SceneRealEditCarPartController {
 		oriECat =  MySQLDatenbankConnection.getInt("SELECT `Kategorienummer` FROM `changehistorycarparts` WHERE `CPID` = "+cpid+" AND `Version` = "+version.toPlainString());
 		oriPreis = MySQLDatenbankConnection.getDouble("SELECT `Preis` FROM `changehistorycarparts` WHERE `CPID` = " + cpid+" AND `Version` = "+version.toPlainString());
 		oriVDE = MySQLDatenbankConnection.getString("SELECT `Versand` FROM `changehistorycarparts` WHERE `CPID` = "+cpid+" AND `Version` = "+version.toPlainString());
-		oriVEU = MySQLDatenbankConnection.getString("SELECT `VersandEU` FROM `changehistorycarparts` WHERE `CPID` = "+cpid+" AND `Version` = "+version.toPlainString());
 		oriA =  MySQLDatenbankConnection.getInt("SELECT `Menge` FROM `changehistorycarparts` WHERE `CPID` = "+cpid+" AND `Version` = "+version.toPlainString());
 		orioEString = MySQLDatenbankConnection.getString("SELECT `OENumber` FROM `changehistorycarparts` WHERE `CPID` = "+cpid+" AND `Version` = "+version.toPlainString());
 		orieBProdeString = MySQLDatenbankConnection.getString("SELECT `eBayProduktart` FROM `changehistorycarparts` WHERE `CPID` = "+cpid+" AND `Version` = "+version.toPlainString());
@@ -863,12 +851,11 @@ public class SceneRealEditCarPartController {
 			spgEin = setEditedStringComboBox(spgE, spgEin, oriSpgE);
 			pass = setEditedString(passend, pass, oriPassend);		
 			vers = setEditedStringComboBox(versandDE, vers, oriVDE);
-			versEU =  setEditedStringComboBox(versandEU, versEU, oriVEU);
 			meng = setEditedInteger(anzahl, meng, oriA);
 			bemer = setEditedStringTextArea(bemerkungOri, bemer, bemOri);
 			//TODO AFTER
-			SceneRealEditCarPartsCheckController.init(oriTeil, teile, oriHerst, oriTNr, oriZust, oriECat, oriPreis, oriVDE, oriVEU, oriA, bemOri, orioEString, orieBFarbcodeString, oriebFarbeString, orieBPositionString, orieBProdeString, oriStrE, oriSpgE, oriStr, oriSpg, oriPassend);
-			SceneRealEditCarPartsCheckController.initSecond(tite, teiler, herst, oriT, zusta, kategorie, pr, vers, versEU, meng, bemer, oEString, eBFarbcodeString, ebFarbeString, eBPositionString, eBProdeString, strEin, spgEin, stro, span, pass);
+			SceneRealEditCarPartsCheckController.init(oriTeil, teile, oriHerst, oriTNr, oriZust, oriECat, oriPreis, oriVDE, oriA, bemOri, orioEString, orieBFarbcodeString, oriebFarbeString, orieBPositionString, orieBProdeString, oriStrE, oriSpgE, oriStr, oriSpg, oriPassend);
+			SceneRealEditCarPartsCheckController.initSecond(tite, teiler, herst, oriT, zusta, kategorie, pr, vers, meng, bemer, oEString, eBFarbcodeString, ebFarbeString, eBPositionString, eBProdeString, strEin, spgEin, stro, span, pass);
 			SceneRealEditCarPartsCheckController.setCarID(carid);
 			SceneRealEditCarPartsCheckController.initCarPart(carpartid);
 			FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("RealEditCarPartsCheck.fxml"));	

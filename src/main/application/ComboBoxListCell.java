@@ -4,7 +4,8 @@ import java.math.BigDecimal;
 
 import javafx.scene.control.ListCell;
 
-/*Erweiterung (Override) von updateItem aus Cell um eigene Versionierungsvorlage von 0,00001 sauber anzuzeigen mithilfe von BigDecimal
+/* Vererbung (Ableitung) aus ListCell Klasse
+ * Erweiterung (Override) von updateItem aus Cell um eigene Versionierungsvorlage von 0,00001 sauber anzuzeigen mithilfe von BigDecimal
  * 
  * 
  * */

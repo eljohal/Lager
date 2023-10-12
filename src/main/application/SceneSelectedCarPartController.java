@@ -76,9 +76,6 @@ public class SceneSelectedCarPartController {
 	TextField versandDEOri;
 	String oriVDE;
 	@FXML
-	TextField versandEUOri;
-	String oriVEU;
-	@FXML
 	TextField anzahlOri;
 	int oriA;
 	@FXML
@@ -116,8 +113,7 @@ public class SceneSelectedCarPartController {
 		zustOri.setText("Zustand: "+oriZust);
 		eCatOri.setText("eBay-Kat.: "+Integer.toString(oriECat));
 		preisOri.setText(""+Double.toString(oriPreis)+" €");
-		versandDEOri.setText("Versand (DE): "+oriVDE);
-		versandEUOri.setText("Versand (EU): "+oriVEU);
+		versandDEOri.setText("Versand: "+oriVDE);
 		anzahlOri.setText("Anzahl: "+Integer.toString(oriA));
 		
 		oriOENummer.setText("OE-Nr.: "+oeNummer);
@@ -139,9 +135,7 @@ public class SceneSelectedCarPartController {
 		oriZust = MySQLDatenbankConnection.getString("SELECT `Zustand` FROM `carpartsdata` WHERE `CarPartID` = "+carpartid+" AND `CarID` = "+carid+"");
 		oriECat =  MySQLDatenbankConnection.getInt("SELECT `Kategorienummer` FROM `carpartsdata` WHERE `CarPartID` = "+carpartid+" AND `CarID` = "+carid+"");
 		oriPreis = MySQLDatenbankConnection.getDouble("SELECT `Preis` FROM `carpartsdata` WHERE `CarPartID` = '" + carpartid + "' AND `CarID` = "+carid+"");
-		oriVDE = MySQLDatenbankConnection.getString("SELECT `Versand` FROM `carpartsdata` WHERE `CarPartID` = "+carpartid+" AND `CarID` = "+carid+"");
-		oriVEU = MySQLDatenbankConnection.getString("SELECT `VersandEU` FROM `carpartsdata` WHERE `CarPartID` = "+carpartid+" AND `CarID` = "+carid+"");
-		
+		oriVDE = MySQLDatenbankConnection.getString("SELECT `Versand` FROM `carpartsdata` WHERE `CarPartID` = "+carpartid+" AND `CarID` = "+carid+"");		
 		oeNummer = MySQLDatenbankConnection.getString("SELECT `OENumber` FROM `carpartsdata` WHERE `CarPartID` = "+carpartid+" AND `CarID` = "+carid+"");
 		eBProd = MySQLDatenbankConnection.getString("SELECT `eBayProduktart` FROM `carpartsdata` WHERE `CarPartID` = "+carpartid+" AND `CarID` = "+carid+"");
 		eBPos = MySQLDatenbankConnection.getString("SELECT `eBayPosition` FROM `carpartsdata` WHERE `CarPartID` = "+carpartid+" AND `CarID` = "+carid+"");

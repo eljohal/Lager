@@ -3,7 +3,7 @@ package main.application;
 
 import java.io.IOException;
 
-
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -199,19 +199,25 @@ public class SceneOverviewController {
 		}
 	}
 	
-	public void editCar() throws IOException {
+	public void editCar(){
 		if(caroverview.getSelectionModel().getSelectedItem() != null ) {
-			checkChanges.pauseCarPartsChangesThread();
-			if(checkChanges.carPartsChanges.isShutdown()) {
-				Car ident = caroverview.getSelectionModel().getSelectedItem();
-				int carid = ident.getCarID().get();
-				SceneEditCarController.init(carid);
-				stag = (Stage) createcar.getScene().getWindow();
-				SceneEditCarController.getStage(stag);
-				root = FXMLLoader.load(getClass().getClassLoader().getResource("EditCar.fxml"));
-				stag.setScene(new Scene(root));
-				cardata.clear();
-			}
+			Platform.runLater(() -> {
+				try {
+				checkChanges.pauseCarPartsChangesThread();
+				if(checkChanges.carPartsChanges.isShutdown()) {
+					Car ident = caroverview.getSelectionModel().getSelectedItem();
+					int carid = ident.getCarID().get();
+					SceneEditCarController.init(carid);
+					stag = (Stage) createcar.getScene().getWindow();
+					SceneEditCarController.getStage(stag);
+					root = FXMLLoader.load(getClass().getClassLoader().getResource("EditCar.fxml"));
+					stag.setScene(new Scene(root));
+					cardata.clear();
+				}
+				}catch(IOException e) {
+					e.printStackTrace();
+				}
+			});
 		}else {
 			textshow.getChildren().clear();
 			ausgabeedit.setFill(Color.BLACK);

@@ -45,7 +45,9 @@ public class SceneDeleteCarPartController {
 	
 	public void delete() throws IOException {
 		double pre = MySQLDatenbankConnection.getDouble("SELECT `Preis` FROM `carpartsdata` WHERE `CarPartID` = '" + id + "' AND `CarID` = "+carid+"");
+		int menge = MySQLDatenbankConnection.getInt("SELECT `Menge` FROM `carpartsdata` WHERE `CarPartID` = '" + id + "' AND `CarID` = "+carid+"");
 		SceneCarPartsController.substract = BigDecimal.valueOf(pre);
+		SceneCarPartsController.mengeRemove = BigDecimal.valueOf(menge);
 		MySQLDatenbankConnection.update("DELETE FROM `carpartsdata` WHERE `CarPartID` = '" + id + "' AND `CarID` = "+carid+"");
 		sceneCarPartsController.removeCarPart(index);
 		SceneCarPartsController.closeCheckWindow();

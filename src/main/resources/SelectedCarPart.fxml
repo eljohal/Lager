@@ -23,7 +23,7 @@
       <TextField fx:id="zustOri" editable="false" layoutX="25.0" layoutY="459.0" prefHeight="25.0" prefWidth="226.0" style="-fx-background-color: WHITE;" AnchorPane.leftAnchor="25.0" AnchorPane.topAnchor="459.0" />
       <TextField id="txtFld" fx:id="eCatOri" editable="false" layoutX="25.0" layoutY="494.0" prefHeight="25.0" prefWidth="226.0" style="-fx-background-color: WHITE;" AnchorPane.leftAnchor="25.0" AnchorPane.topAnchor="494.0" />
       <TextField fx:id="preisOri" editable="false" layoutX="25.0" layoutY="529.0" prefHeight="25.0" prefWidth="226.0" style="-fx-background-color: WHITE;" AnchorPane.leftAnchor="25.0" AnchorPane.topAnchor="529.0" />
-      <TextField fx:id="anzahlOri" editable="false" layoutX="25.0" layoutY="634.0" prefHeight="25.0" prefWidth="226.0" style="-fx-background-color: WHITE;" AnchorPane.leftAnchor="25.0" AnchorPane.topAnchor="634.0" />
+      <TextField fx:id="anzahlOri" editable="false" layoutX="25.0" layoutY="634.0" prefHeight="25.0" prefWidth="226.0" style="-fx-background-color: WHITE;" AnchorPane.leftAnchor="25.0" AnchorPane.topAnchor="599.0" />
       <TextField fx:id="titel" layoutX="25.0" layoutY="669.0" prefHeight="26.0" prefWidth="436.0" promptText="Titel" style="-fx-background-color: WHITE;" AnchorPane.leftAnchor="25.0" AnchorPane.topAnchor="669.0" />
       <TextArea fx:id="bemerkungOri" editable="false" layoutX="275.0" layoutY="529.0" prefHeight="130.0" prefWidth="226.0" promptText="Bemerkung" AnchorPane.leftAnchor="275.0" AnchorPane.topAnchor="529.0" />
       <Button fx:id="abbrechen" layoutX="367.0" layoutY="758.0" mnemonicParsing="false" onAction="#goBack" prefHeight="25.0" prefWidth="130.0" style="-fx-background-color: WHITE;" text="Abbrechen" textAlignment="CENTER" AnchorPane.rightAnchor="60.0" AnchorPane.topAnchor="758.0" />
@@ -46,7 +46,6 @@
          </font>
       </Label>
       <TextField fx:id="versandDEOri" editable="false" layoutX="25.0" layoutY="561.0" prefHeight="25.0" prefWidth="226.0" style="-fx-background-color: WHITE;" AnchorPane.leftAnchor="25.0" AnchorPane.topAnchor="564.0" />
-      <TextField fx:id="versandEUOri" editable="false" layoutX="25.0" layoutY="594.0" prefHeight="25.0" prefWidth="226.0" style="-fx-background-color: WHITE;" AnchorPane.leftAnchor="25.0" AnchorPane.topAnchor="599.0" />
       <TextField fx:id="spgStrOri" editable="false" layoutX="279.0" layoutY="459.0" prefHeight="26.0" prefWidth="226.0" style="-fx-background-color: WHITE; -fx-background-radius: 3;" AnchorPane.leftAnchor="275.0" AnchorPane.topAnchor="459.0" />
       <ImageView fx:id="image" fitHeight="252.0" fitWidth="259.0" layoutX="266.0" layoutY="52.0" pickOnBounds="true" preserveRatio="true" />
       <TextField fx:id="passendOri" editable="false" layoutX="275.0" layoutY="494.0" prefHeight="26.0" prefWidth="226.0" style="-fx-background-color: WHITE; -fx-background-radius: 3;" AnchorPane.leftAnchor="275.0" AnchorPane.topAnchor="494.0" />
