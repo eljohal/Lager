@@ -1,5 +1,8 @@
 package main.application; 
 
+import java.awt.Graphics2D;
+import java.awt.geom.AffineTransform;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -13,10 +16,14 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.imageio.ImageIO;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.controlsfx.control.textfield.AutoCompletionBinding;
 import org.controlsfx.control.textfield.TextFields;
+
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
@@ -114,6 +121,8 @@ public class SceneAddCarPartController {
 	@FXML
 	TextField oriOENummer;
 	@FXML
+	TextArea ownBemerkung;
+	@FXML
 	TextField eBaySpannung;
 	@FXML
 	private ComboBox<String> eBaySpannungEinheit;
@@ -148,6 +157,7 @@ public class SceneAddCarPartController {
 	String oEN;
 	String zusta;
 	String bemer;
+	String ownBemer;
 	String eBProd;
 	String eBFarb;
 	String eBPos;
@@ -161,6 +171,7 @@ public class SceneAddCarPartController {
 	String vers;
 	String passA;
 	int imagecount;
+	Image images;
 	
 	Text nothingSelected = new Text("Bitte Titel über Reload Button erstellen");
 	Text missingteil = new Text("Bitte vorher ein Teil auswählen");
@@ -445,56 +456,85 @@ public class SceneAddCarPartController {
 	public void image(boolean direction){
 		Path path = createTempDir();
 		getFileID(path);
-		if(getFileID(path) > 0) {
-			if(direction) {
-				imagecount++;
-				if(imagecount < getFileID(path)) {
-					Path imageFile = path.resolve(""+imagecount+".jpg");
-					//image.setImage(new Image(imageFile.toString()));
-					centerImage(new Image(imageFile.toString()));
-				}else if (imagecount >= getFileID(path)) {
-					imagecount = getFileID(path) - 1;
+		Platform.runLater(() -> {
+			if(getFileID(path) > 0) {
+				if(direction) {
+					imagecount++;
+					if(imagecount < getFileID(path)) {
+						Path imageFile = path.resolve(""+imagecount+".jpg");
+						image.setImage(null);
+						images = new Image(imageFile.toString(), 270, 260, true, false);
+						image.setImage(images);
+					}else if (imagecount >= getFileID(path)) {
+						imagecount = getFileID(path) - 1;
+					}
+				}else {
+					imagecount--;
+					if(imagecount > 0) {
+						Path imageFile = path.resolve(""+imagecount+".jpg");
+						image.setImage(null);
+						images = new Image(imageFile.toString(), 270, 260, true, false);
+						image.setImage(images);
+					}if(imagecount <= 0) {
+						imagecount = 0;
+						Path imageFile = path.resolve(""+imagecount+".jpg");
+						image.setImage(null);
+						images = new Image(imageFile.toString(), 270, 260, true, false);
+						image.setImage(images);
+					}
 				}
 			}else {
-				imagecount--;
-				if(imagecount > 0) {
-					Path imageFile = path.resolve(""+imagecount+".jpg");
-					//image.setImage(new Image(imageFile.toString()));
-					centerImage(new Image(imageFile.toString()));
-				}if(imagecount <= 0) {
-					imagecount = 0;
-					Path imageFile = path.resolve(""+imagecount+".jpg");
-					//image.setImage(new Image(imageFile.toString()));
-					centerImage(new Image(imageFile.toString()));
-				}
+				image.setImage(null); 
 			}
-		}else {
-			image.setImage(null); 
+		});
+	}
+	public void rotate() {
+		if(image.getImage() != null) {
+			Path path = Paths.get(image.getImage().getUrl());
+			rotateImage(path.toFile());
 		}
 	}
-	public void centerImage(Image img) {
-		if (img != null) {
-            double w = 0;
-            double h = 0;
+	public void rotateImage(File imageFile) {
+		Platform.runLater(() -> {
+			try {
+				BufferedImage originalImage = ImageIO.read(imageFile);
+				ImageIO.write(rotateOriginalImage(originalImage, 90), "jpg", imageFile);
+				image.setImage(null);
+				images = new Image(imageFile.toString(), 270, 260, true, false);
+				image.setImage(images);
+				
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		});
+	}
+	public BufferedImage rotateOriginalImage(BufferedImage originalImage, int degrees) {
+	    int width = originalImage.getWidth();
+	    int height = originalImage.getHeight();
 
-            double ratioX = image.getFitWidth() / img.getWidth();
-            double ratioY = image.getFitHeight() / img.getHeight();
+	    // Berechne die Abmessungen des neuen Bildes, um die gesamte Drehung zu speichern
+	    double radians = Math.toRadians(degrees);
+	    double sin = Math.abs(Math.sin(radians));
+	    double cos = Math.abs(Math.cos(radians));
+	    int newWidth = (int) Math.floor(cos * width + sin * height);
+	    int newHeight = (int) Math.floor(cos * height + sin * width);
 
-            double reducCoeff = 0;
-            if(ratioX >= ratioY) {
-                reducCoeff = ratioY;
-            } else {
-                reducCoeff = ratioX;
-            }
+	    // Erzeuge ein leeres BufferedImage für das gedrehte Bild
+	    BufferedImage rotatedImage = new BufferedImage(newWidth, newHeight, originalImage.getType());
 
-            w = img.getWidth() * reducCoeff;
-            h = img.getHeight() * reducCoeff;
+	    // Erzeuge eine AffineTransform für die Rotation
+	    AffineTransform at = new AffineTransform();
+	    at.translate((newWidth - width) / 2, (newHeight - height) / 2);
+	    at.rotate(radians, width / 2, height / 2);
 
-            image.setX((image.getFitWidth() - w) / 2);
-            image.setY((image.getFitHeight() - h) / 2);
-            image.setImage(img);
+	    // Zeichne das ursprüngliche Bild unter Verwendung der Rotationstransformation
+	    Graphics2D g = rotatedImage.createGraphics();
+	    g.setTransform(at);
+	    g.drawImage(originalImage, 0, 0, null);
+	    g.dispose();
 
-        }
+	    return rotatedImage;
 	}
 	@FXML
 	private void handleDragOver(DragEvent event) {
@@ -639,6 +679,7 @@ public class SceneAddCarPartController {
 			vers = setStringComboBox(versandDE);
 			pr = setDouble(preis);
 			bemer = bemerkung.getText();
+			ownBemer = ownBemerkung.getText();
 			int i_max = MySQLDatenbankConnection.getInt("SELECT MIN(CarPartID) FROM `carpartsdata` WHERE CarID = "+carid+"");
 			if(i_max != 1 || i_max == 0) {
 				i_max = 1;
@@ -647,14 +688,15 @@ public class SceneAddCarPartController {
 			}
 			int y_max = MySQLDatenbankConnection.getInt("SELECT MIN(d1.CPID)+1 FROM `carpartsdata` d1 LEFT JOIN `carpartsdata` d2 ON d1.CPID + 1 = d2.CPID WHERE d2.CPID is NULL");
 			Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-			MySQLDatenbankConnection.update("INSERT INTO `carpartsdata`(`CarPartID`, `Bezeichnung`, `Hersteller`, `OrignalTeilenummer`, `Zustand`, `Bemerkung`, `Kategorienummer`, `Preis`, `Menge`, `Versand`, `eBayProduktart`, `CarID`, `versandEU`, `CPID`, `Teil`, `OENumber`, `eBayPosition`, `eBayFarbe`, `eBayFarbecode`, `Spannung`, `SpannungEinheit`, `Stromstaerke`, `StromstaerkeEinheit`, `Passend`, `Version`) VALUES ('"+i_max+"','"+tite+"','"+herst+"','"+oriT+"','"+zusta+"','"+bemer+"','"+kategorie+"','"+pr+"','"+meng+"','"+vers+"','"+eBProd+"','"+carid+"',' ','"+y_max+"','"+teile+"','"+oEN+"','"+eBPos+"','"+eBFarb+"', '"+eBFarbC+"','"+eBSpg+"','"+spgE+"','"+eBStr+"','"+strE+"','"+passA+"','0.00001')");
+			MySQLDatenbankConnection.update("INSERT INTO `carpartsdata`(`CarPartID`, `Bezeichnung`, `Hersteller`, `OrignalTeilenummer`, `Zustand`, `Bemerkung`, `Kategorienummer`, `Preis`, `Menge`, `Versand`, `eBayProduktart`, `CarID`, `versandEU`, `CPID`, `Teil`, `OENumber`, `eBayPosition`, `eBayFarbe`, `eBayFarbecode`, `Spannung`, `SpannungEinheit`, `Stromstaerke`, `StromstaerkeEinheit`, `Passend`, `Version`) VALUES ('"+i_max+"','"+tite+"','"+herst+"','"+oriT+"','"+zusta+"','"+bemer+"','"+kategorie+"','"+pr+"','"+meng+"','"+vers+"','"+eBProd+"','"+carid+"','"+ownBemer+"','"+y_max+"','"+teile+"','"+oEN+"','"+eBPos+"','"+eBFarb+"', '"+eBFarbC+"','"+eBSpg+"','"+spgE+"','"+eBStr+"','"+strE+"','"+passA+"','0.00001')");
 			int x_max = MySQLDatenbankConnection.getInt("SELECT MAX(`ChangeID`) FROM `changehistorycarparts` WHERE 1");
 			x_max++;
 			changes = "neu";
-			MySQLDatenbankConnection.update("INSERT INTO `changehistorycarparts`(`CPID`, `UserID`, `TimeStamp`, `ChangeID`, `CarID`, `Changed`, `CarPartID`, `Bezeichnung`, `Hersteller`, `OrignalTeilenummer`, `Zustand`, `Bemerkung`, `Kategorienummer`, `Preis`, `Menge`, `Versand`, `eBayProduktart`, `versandEU`, `Teil`, `OENumber`, `eBayPosition`, `eBayFarbe`, `eBayFarbecode`, `Spannung`, `SpannungEinheit`, `Stromstaerke`, `StromstaerkeEinheit`, `Passend`, `Version`) VALUES ('"+y_max+"','"+User.id+"','"+timestamp+"','"+x_max+"','"+carid+"','"+changes+"','"+i_max+"','"+tite+"','"+herst+"','"+oriT+"','"+zusta+"','"+bemer+"','"+kategorie+"','"+pr+"','"+meng+"','"+vers+"','"+eBProd+"',' ','"+teile+"','"+oEN+"','"+eBPos+"','"+eBFarb+"', '"+eBFarbC+"','"+eBSpg+"','"+spgE+"','"+eBStr+"','"+strE+"','"+passA+"','0.00001')");
+			MySQLDatenbankConnection.update("INSERT INTO `changehistorycarparts`(`CPID`, `UserID`, `TimeStamp`, `ChangeID`, `CarID`, `Changed`, `CarPartID`, `Bezeichnung`, `Hersteller`, `OrignalTeilenummer`, `Zustand`, `Bemerkung`, `Kategorienummer`, `Preis`, `Menge`, `Versand`, `eBayProduktart`, `versandEU`, `Teil`, `OENumber`, `eBayPosition`, `eBayFarbe`, `eBayFarbecode`, `Spannung`, `SpannungEinheit`, `Stromstaerke`, `StromstaerkeEinheit`, `Passend`, `Version`) VALUES ('"+y_max+"','"+User.id+"','"+timestamp+"','"+x_max+"','"+carid+"','"+changes+"','"+i_max+"','"+tite+"','"+herst+"','"+oriT+"','"+zusta+"','"+bemer+"','"+kategorie+"','"+pr+"','"+meng+"','"+vers+"','"+eBProd+"','"+ownBemer+"','"+teile+"','"+oEN+"','"+eBPos+"','"+eBFarb+"', '"+eBFarbC+"','"+eBSpg+"','"+spgE+"','"+eBStr+"','"+strE+"','"+passA+"','0.00001')");
 			SceneCarPartsController.setCarID(carid);
 			copyImageToDestination(i_max);
 			try {
+				image.setImage(null);
 				root = FXMLLoader.load(getClass().getClassLoader().getResource("CarPartsOverview.fxml"));
 				stag = (Stage) abbrechen.getScene().getWindow();
 				stag.setScene(new Scene(root));
@@ -708,6 +750,7 @@ public class SceneAddCarPartController {
 			show.getChildren().clear();
 			deleteImagesInTemp();
 			SceneCarPartsController.setCarID(carid);
+			image.setImage(null);
 			root = FXMLLoader.load(getClass().getClassLoader().getResource("CarPartsOverview.fxml"));
 			stag = (Stage) abbrechen.getScene().getWindow();
 			stag.setScene(new Scene(root));

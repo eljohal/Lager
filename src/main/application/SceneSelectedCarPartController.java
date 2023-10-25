@@ -7,6 +7,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.DecimalFormat;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -87,7 +88,7 @@ public class SceneSelectedCarPartController {
 	@FXML
 	TextArea bemerkungOri;
 	String bemOri;
-	
+	Image images;
 
 	@FXML 
 	Button abbrechen;
@@ -157,27 +158,37 @@ public class SceneSelectedCarPartController {
 	
 	public void image(boolean direction) throws IOException {
 		Path path = createDir(carid);
-		if(countImages(carpartid) > 0) {
-			if(direction) {
-				imagecount++;
-				if(imagecount < countImages(carpartid)) {
-					Path imageFile = path.resolve(""+filename.format(carpartid)+""+Alphabet[imagecount]+".jpg");
-					centerImage(new Image(imageFile.toString()));
-				}else if (imagecount >= countImages(carpartid)) {
-					imagecount = countImages(carpartid) - 1;
+		Platform.runLater(() -> {
+			if(countImages(carpartid) > 0) {
+				if(direction) {
+					imagecount++;
+					if(imagecount < countImages(carpartid)) {
+						Path imageFile = path.resolve(""+filename.format(carpartid)+""+Alphabet[imagecount]+".jpg");
+						image.setImage(null);
+						images = new Image(imageFile.toString(), 260, 250, true, false);
+						image.setImage(images);
+					}else if (imagecount >= countImages(carpartid)) {
+						imagecount = countImages(carpartid) - 1;
+					}
+				}else {
+					imagecount--;
+					if(imagecount > 0) {
+						Path imageFile = path.resolve(""+filename.format(carpartid)+""+Alphabet[imagecount]+".jpg");
+						image.setImage(null);
+						images = new Image(imageFile.toString(), 260, 250, true, false);
+						image.setImage(images);
+					}if(imagecount <= 0) {
+						imagecount = 0;
+						Path imageFile = path.resolve(""+filename.format(carpartid)+""+Alphabet[imagecount]+".jpg");
+						image.setImage(null);
+						images = new Image(imageFile.toString(), 260, 250, true, false);
+						image.setImage(images);
+					}
 				}
 			}else {
-				imagecount--;
-				if(imagecount > 0) {
-					Path imageFile = path.resolve(""+filename.format(carpartid)+""+Alphabet[imagecount]+".jpg");
-					centerImage(new Image(imageFile.toString()));
-				}if(imagecount <= 0) {
-					imagecount = 0;
-					Path imageFile = path.resolve(""+filename.format(carpartid)+""+Alphabet[imagecount]+".jpg");
-					centerImage(new Image(imageFile.toString()));
-				}
-		}
-		}
+				image.setImage(null);
+			}
+		});
 	}
 	
 	public void sceneGeneralSettings(SceneCarPartsController controller) {
@@ -186,31 +197,6 @@ public class SceneSelectedCarPartController {
 	
 	public static void setCarID(int cid) {
 		carid = cid;		
-	}
-	
-	public void centerImage(Image img) {
-		if (img != null) {
-            double w = 0;
-            double h = 0;
-
-            double ratioX = image.getFitWidth() / img.getWidth();
-            double ratioY = image.getFitHeight() / img.getHeight();
-
-            double reducCoeff = 0;
-            if(ratioX >= ratioY) {
-                reducCoeff = ratioY;
-            } else {
-                reducCoeff = ratioX;
-            }
-
-            w = img.getWidth() * reducCoeff;
-            h = img.getHeight() * reducCoeff;
-
-            image.setX((image.getFitWidth() - w) / 2);
-            image.setY((image.getFitHeight() - h) / 2);
-            image.setImage(img);
-
-        }
 	}
 	public Path createDir(int carid) throws IOException {
 		Path path = Paths.get(PictureDirectory.getDir()+ "\\" + filename.format(carid));
@@ -246,6 +232,7 @@ public class SceneSelectedCarPartController {
 		carpartid = cp;
 	}
 	public void goBack() throws IOException {
+		image.setImage(null);
 		show.getChildren().clear();
 		SceneCarPartsController.setCarID(carid);
 		SceneCarPartsController.closeCheckWindow();

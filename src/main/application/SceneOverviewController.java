@@ -26,6 +26,7 @@ import javafx.stage.WindowEvent;
 public class SceneOverviewController {
 	
 	public static Stage stag;
+	public static Stage oriStag;
 	public Scene scene;
 	public Parent root;
 	
@@ -88,7 +89,13 @@ public class SceneOverviewController {
 		modell.setCellValueFactory(cellData -> cellData.getValue().getCarModell());
 		stag.setOnCloseRequest((WindowEvent event) -> {
             // Show a confirmation dialog
+			
 			checkChanges.pauseCarPartsChangesThread();
+			if(checkChanges.carPartsChanges.isShutdown()) {
+				System.out.print("Test");
+				Platform.exit();
+				System.exit(0);
+			}
         });
 		caroverview.setRowFactory( tv -> {
 			   TableRow<Car> row = new TableRow<>();
@@ -179,7 +186,6 @@ public class SceneOverviewController {
 	        cardata.clear();
 		}
 	}
-	
 	public void openCarParts() throws IOException {
 		if(caroverview.getSelectionModel().getSelectedItem() != null ) {
 			checkChanges.pauseCarPartsChangesThread();

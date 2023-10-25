@@ -1,7 +1,9 @@
 package main.application;
 
-import java.awt.Color;
+import java.awt.Color; //watch out, use full qualifier for colors
+import javafx.scene.paint.Color; //watch out, use full qualifier for colors
 import java.awt.Font;
+import javafx.scene.control.TableCell;
 import java.awt.FontFormatException;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -48,6 +50,7 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -55,6 +58,8 @@ import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.TransferMode;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
@@ -88,6 +93,8 @@ public class SceneCarPartsController {
 	@FXML
 	TableColumn<CarParts, String> versandTableColumn;
 	@FXML
+	TableColumn<CarParts, Number> anzahlTableColumn;
+	@FXML
 	ImageView image;
 	@FXML
 	TextFlow textshow;
@@ -111,6 +118,9 @@ public class SceneCarPartsController {
 	TextField fahrgestellnummer;
 	@FXML
 	TextField gesamtPreisTextField;
+	@FXML
+	TextArea ownBemerkung;
+	String bemer;
 	static BigDecimal gesamtPreis;
 	static BigDecimal substract = new BigDecimal("0");
 	static BigDecimal mengeRemove;
@@ -144,62 +154,44 @@ public class SceneCarPartsController {
 	Button rightpic;
 	DecimalFormat filename = new DecimalFormat("000");
 	static String Alphabet[] = {"","a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"};
-	int carpartid = 1;
+	int carpartid = MySQLDatenbankConnection.getInt("SELECT MAX(CarPartID) FROM `carpartsdata` WHERE `CarID` = '"+carid+"'");
 	Text ausgabeedit = new Text("Bitte wähle vorher ein Fahrzeugteil aus der Liste um es zu duplizieren.");
-	
+	Image images;
 	public void image(boolean direction) throws IOException {
 		Path path = createDir(carid);
-		if(countImages(carpartid) > 0) {
-			if(direction) {
-				imagecount++;
-				if(imagecount < countImages(carpartid)) {
-					Path imageFile = path.resolve(""+filename.format(carpartid)+""+Alphabet[imagecount]+".jpg");
-					//image.setImage(new Image(imageFile.toString()));
-					centerImage(new Image(imageFile.toString()));
-				}else if (imagecount >= countImages(carpartid)) {
-					imagecount = countImages(carpartid) - 1;
+		Platform.runLater(() -> {
+			if(countImages(carpartid) > 0) {
+				if(direction) {
+					imagecount++;
+					if(imagecount < countImages(carpartid)) {
+						Path imageFile = path.resolve(""+filename.format(carpartid)+""+Alphabet[imagecount]+".jpg");
+						image.setImage(null);
+						images = new Image(imageFile.toString(), 260, 235, true, false);
+						image.setImage(images);
+					}else if (imagecount >= countImages(carpartid)) {
+						imagecount = countImages(carpartid) - 1;
+					}
+				}else {
+					imagecount--;
+					if(imagecount > 0) {
+						Path imageFile = path.resolve(""+filename.format(carpartid)+""+Alphabet[imagecount]+".jpg");
+						image.setImage(null);
+						images = new Image(imageFile.toString(), 260, 235, true, false);
+						image.setImage(images);
+					}if(imagecount <= 0) {
+						imagecount = 0;
+						Path imageFile = path.resolve(""+filename.format(carpartid)+""+Alphabet[imagecount]+".jpg");
+						image.setImage(null);
+						images = new Image(imageFile.toString(), 260, 235, true, false);
+						image.setImage(images);
+						}
 				}
 			}else {
-				imagecount--;
-				if(imagecount > 0) {
-					Path imageFile = path.resolve(""+filename.format(carpartid)+""+Alphabet[imagecount]+".jpg");
-					//image.setImage(new Image(imageFile.toString()));
-					centerImage(new Image(imageFile.toString()));
-				}if(imagecount <= 0) {
-					imagecount = 0;
-					Path imageFile = path.resolve(""+filename.format(carpartid)+""+Alphabet[imagecount]+".jpg");
-					//image.setImage(new Image(imageFile.toString()));
-					centerImage(new Image(imageFile.toString()));
-				}
-		}
-		}
+				image.setImage(null);
+			}
+		});
 	}
-	
-	public void centerImage(Image img) {
-		if (img != null) {
-            double w = 0;
-            double h = 0;
 
-            double ratioX = image.getFitWidth() / img.getWidth();
-            double ratioY = image.getFitHeight() / img.getHeight();
-
-            double reducCoeff = 0;
-            if(ratioX >= ratioY) {
-                reducCoeff = ratioY;
-            } else {
-                reducCoeff = ratioX;
-            }
-
-            w = img.getWidth() * reducCoeff;
-            h = img.getHeight() * reducCoeff;
-
-            image.setX((image.getFitWidth() - w) / 2);
-            image.setY((image.getFitHeight() - h) / 2);
-            image.setImage(img);
-
-        }
-	}
-	
 	public int countImages(int cpid) {
 		File folder = new File(PictureDirectory.getDir()+ "\\" + filename.format(carid)); //needs to be changed
 		File[] files = folder.listFiles();
@@ -307,7 +299,72 @@ public class SceneCarPartsController {
 		oriT.setCellValueFactory(cellData -> cellData.getValue().getCarPartsOriTeilNr());
 		zustand.setCellValueFactory(cellData -> cellData.getValue().getCarPartsZustand());
 		preis.setCellValueFactory(cellData -> cellData.getValue().getCarPartsPreis());
+		preis.setCellFactory(column -> {
+			return new TableCell<CarParts, Number>() { 
+		        @Override
+		        protected void updateItem(Number item, boolean empty) {
+		            super.updateItem(item, empty);
+
+		            if (empty || item == null) {
+		                setText(null);
+		                setStyle(""); 
+		            } else {
+		                setText(item.toString());
+		                if (item.doubleValue() == 0.0) {
+		                    setTextFill(javafx.scene.paint.Color.RED);
+		                } else {
+		                    setTextFill(javafx.scene.paint.Color.BLACK);
+		                }
+		            }
+		        }
+		    };
+		});
 		versandTableColumn.setCellValueFactory(cellData -> cellData.getValue().getCarPartsVersand());
+		versandTableColumn.setCellFactory(column -> {
+			return new TableCell<CarParts, String>() { 
+		        @Override
+		        protected void updateItem(String item, boolean empty) {
+		            super.updateItem(item, empty);
+
+		            if (empty || item == null) {
+		                setText(null);
+		                setStyle(""); 
+		            } else {
+		                
+		                if (item.toString().isEmpty()) {
+		                	setText("leer");
+		                	setTextFill(javafx.scene.paint.Color.RED);
+		                } else {
+		                	setText(item.toString());
+		                	setTextFill(javafx.scene.paint.Color.BLACK);
+		                }
+		            }
+		        }
+		    };
+		});
+		anzahlTableColumn.setCellValueFactory(cellData -> cellData.getValue().getCarPartsMenge());
+		anzahlTableColumn.setCellFactory(column -> {
+			return new TableCell<CarParts, Number>() { // Verwenden Sie den gleichen generischen Typ
+		        @Override
+		        protected void updateItem(Number item, boolean empty) {
+		            super.updateItem(item, empty);
+
+		            if (empty || item == null) {
+		                setText(null);
+		                setStyle(""); // Zurücksetzen der benutzerdefinierten Stile
+		            } else {
+		                setText(item.toString());
+		                if (item.intValue() == 0) {
+		                    // Ändern Sie die Schriftfarbe auf Rot, wenn der Wert 0 ist
+		                    setTextFill(javafx.scene.paint.Color.RED);
+		                } else {
+		                    // Andernfalls die Standard-Schriftfarbe verwenden
+		                    setTextFill(javafx.scene.paint.Color.BLACK);
+		                }
+		            }
+		        }
+		    };
+		});
 		oriStag.setOnCloseRequest(event -> {
             event.consume(); // Verhindert das sofortige Schließen des Hauptfensters
             try {
@@ -342,18 +399,21 @@ public class SceneCarPartsController {
 			   return row;
 			});
 		caroverview.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
-			if(newSelection != null) {
-				carpartid = newSelection.getCarPartsID().intValue();
-				image.setImage(null);
-			}else {
-				carpartid = 1;
-			}
-			try {
-				image(false);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			Platform.runLater(() -> {
+				if(newSelection != null) {
+					carpartid = newSelection.getCarPartsID().intValue();
+					image.setImage(null);
+					setBemerkung(ownBemerkung);
+				}else {
+					carpartid = MySQLDatenbankConnection.getInt("SELECT MAX(CarPartID) FROM `carpartsdata` WHERE `CarID` = '"+carid+"'");
+				}
+				try {
+					image(false);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			});
 		});
 		setCarPartsList();
 		image(false);
@@ -370,9 +430,18 @@ public class SceneCarPartsController {
 		DateTimeFormatter formatters = DateTimeFormatter.ofPattern("dd.MM.uuuu");
 		zulass = zulassun.format(formatters);
 		zulassung.setText("Zulassung: "+zulass);
+		//setBemerkung(ownBemerkung);
 		initTableViewSortingDescending();
 		setPreis();
 		filter();
+	}
+	
+	private void setBemerkung(TextArea out) {
+		bemer = MySQLDatenbankConnection.getString("SELECT `versandEU` FROM `carpartsdata` WHERE `CarPartID` = '" + carpartid + "' AND `CarID` = "+carid+"");
+		if(bemer == null) {
+			bemer = "";
+		}
+		out.setText(bemer);
 	}
 	
 	public void versionErrorChangesCount() {
@@ -659,6 +728,7 @@ public class SceneCarPartsController {
 	public void goBack() throws IOException {
 		checkChanges.pauseCarPartsChangesThread();
 		if(checkChanges.carPartsChanges.isShutdown()) {
+			image.setImage(null);
 			search = "";
 			closeCheckWindow();
 			caridOLD = carid;
@@ -688,6 +758,7 @@ public class SceneCarPartsController {
 		if(caroverview.getSelectionModel().getSelectedItem() != null ) {
 			checkChanges.pauseCarPartsChangesThread();
 			if(checkChanges.carPartsChanges.isShutdown()) {
+				image.setImage(null);
 				caridOLD = carid;
 				SceneRealEditCarPartController.setCarID(carid);
 				stag = (Stage) abbrechen.getScene().getWindow();
@@ -716,10 +787,9 @@ public class SceneCarPartsController {
 				}else {
 					i_max = MySQLDatenbankConnection.getInt("SELECT MIN(t1.CarPartID) + 1 AS NextAvailableCarPartID FROM `carpartsdata` t1 LEFT JOIN `carpartsdata` t2 ON t1.CarPartID + 1 = t2.CarPartID AND t1.CarID = t2.CarID WHERE t2.CarPartID IS NULL AND t1.CarID = "+carid+"");
 				}
-				
 				BigDecimal version = MySQLDatenbankConnection.getFloat("SELECT `Version` FROM `carpartsdata` WHERE `CPID` = "+cpid+" ");
 				int y_max = MySQLDatenbankConnection.getInt("SELECT MIN(d1.CPID)+1 FROM `carpartsdata` d1 LEFT JOIN `carpartsdata` d2 ON d1.CPID + 1 = d2.CPID WHERE d2.CPID is NULL");
-				MySQLDatenbankConnection.update("INSERT INTO `carpartsdata`(`CarPartID`, `Bezeichnung`, `Hersteller`, `OrignalTeilenummer`, `Zustand`, `Bemerkung`, `Kategorienummer`, `Preis`, `Menge`, `Versand`, `eBayProduktart`, `CarID`, `versandEU`, `CPID`, `Teil`, `OENumber`, `eBayPosition`, `eBayFarbe`, `eBayFarbecode`,  `Spannung`, `SpannungEinheit`, `Stromstaerke`, `StromstaerkeEinheit`, `Passend`, `Version`) SELECT "+i_max+", CONCAT('DUPLIKAT' , ' ',`Bezeichnung`), `Hersteller`, `OrignalTeilenummer`, `Zustand`, `Bemerkung`, `Kategorienummer`, `Preis`, `Menge`, `Versand`, `eBayProduktart`, `CarID`, `versandEU`,  "+y_max+", `Teil`, `OENumber`, `eBayPosition`, `eBayFarbe`, `eBayFarbecode`,  `Spannung`, `SpannungEinheit`, `Stromstaerke`, `StromstaerkeEinheit`, `Passend`, '0.00001' FROM `carpartsdata` WHERE `CPID` = "+cpid+"");
+				MySQLDatenbankConnection.update("INSERT INTO `carpartsdata`(`CarPartID`, `Bezeichnung`, `Hersteller`, `OrignalTeilenummer`, `Zustand`, `Bemerkung`, `Kategorienummer`, `Preis`, `Menge`, `Versand`, `eBayProduktart`, `CarID`, `versandEU`, `CPID`, `Teil`, `OENumber`, `eBayPosition`, `eBayFarbe`, `eBayFarbecode`,  `Spannung`, `SpannungEinheit`, `Stromstaerke`, `StromstaerkeEinheit`, `Passend`, `Version`) SELECT '"+i_max+"', CONCAT('DUPLIKAT' , ' ',`Bezeichnung`), `Hersteller`, `OrignalTeilenummer`, `Zustand`, `Bemerkung`, `Kategorienummer`, `Preis`, `Menge`, `Versand`, `eBayProduktart`, `CarID`, `versandEU`, '"+y_max+"', `Teil`, `OENumber`, `eBayPosition`, `eBayFarbe`, `eBayFarbecode`,  `Spannung`, `SpannungEinheit`, `Stromstaerke`, `StromstaerkeEinheit`, `Passend`, '0.00001' FROM `carpartsdata` WHERE `CPID` = "+cpid+"");
 				Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 				int x_max = MySQLDatenbankConnection.getInt("SELECT MAX(`ChangeID`) FROM `changehistorycarparts` WHERE 1");
 				x_max++;
@@ -795,6 +865,7 @@ public class SceneCarPartsController {
 		if(checkChanges.carPartsChanges.isShutdown()) {
 			Platform.runLater(() -> {
 				try {
+					image.setImage(null);
 					caridOLD = carid;
 					SceneAddCarPartController.setCarID(carid);
 					stag = (Stage) add.getScene().getWindow();
@@ -860,7 +931,7 @@ public class SceneCarPartsController {
                             if (pageIndex < getPageNumbers()) {
                                 Graphics2D g = (Graphics2D) graphics;
                                 
-                            	g.setColor(Color.BLACK);
+                            	g.setColor(java.awt.Color.BLACK);
                             	g.translate(20, 10);
 
                                 String value = "";

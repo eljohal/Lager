@@ -4,9 +4,11 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.TextFlow?>
 
@@ -19,7 +21,6 @@
          </font>
       </Label>
       <TextFlow fx:id="textshow" layoutX="14.0" layoutY="518.0" prefHeight="45.0" prefWidth="400.0" textAlignment="CENTER" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="325.0" AnchorPane.rightAnchor="325.0" />
-      <ImageView fx:id="image" fitHeight="237.0" fitWidth="259.0" layoutX="321.0" layoutY="52.0" pickOnBounds="true" preserveRatio="true" />
       <Button fx:id="rightpic" layoutX="451.0" layoutY="295.0" maxWidth="25.0" mnemonicParsing="false" onAction="#rightUp" prefHeight="20.0" style="-fx-background-radius: 0 5 5 0; -fx-background-color: WHITE;" text="&gt;" textAlignment="CENTER" AnchorPane.leftAnchor="451.0" AnchorPane.topAnchor="295.0">
          <font>
             <Font name="Yu Gothic Regular" size="13.0" />
@@ -41,11 +42,12 @@
          <columns>
             <TableColumn id="id" fx:id="carpartsid" prefWidth="50.0" text="TeileNr." />
             <TableColumn id="manufactor" fx:id="artikelname" prefWidth="286.0" text="Bezeichnung" />
-            <TableColumn id="modell" fx:id="hersteller" prefWidth="200.0" text="Hersteller" />
-            <TableColumn fx:id="oriT" prefWidth="170.0" text="Orig. TeileNr." />
-            <TableColumn fx:id="zustand" prefWidth="109.0" text="Zustand" />
-            <TableColumn fx:id="preis" prefWidth="68.0" text="Preis" />
-            <TableColumn fx:id="versandTableColumn" prefWidth="66.0" text="Versand" />
+            <TableColumn id="modell" fx:id="hersteller" prefWidth="157.60003662109375" text="Hersteller" />
+            <TableColumn fx:id="oriT" prefWidth="164.0" text="Orig. TeileNr." />
+            <TableColumn fx:id="zustand" prefWidth="121.5999755859375" text="Zustand" />
+            <TableColumn fx:id="preis" prefWidth="60.0" text="Preis" />
+            <TableColumn fx:id="anzahlTableColumn" prefWidth="50.39990234375" text="Anzahl" />
+            <TableColumn fx:id="versandTableColumn" prefWidth="59.2000732421875" text="Versand" />
          </columns>
       </TableView>
       <Button fx:id="change" layoutX="251.0" layoutY="735.0" mnemonicParsing="false" onAction="#editCarPart" prefHeight="25.0" prefWidth="130.0" style="-fx-background-color: WHITE;" text="Fahrzeugteil bearb." textAlignment="CENTER" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="15.0" />
@@ -58,6 +60,12 @@
       <Button fx:id="exportCSVM" layoutX="600.0" layoutY="705.0" mnemonicParsing="false" onAction="#exportProduktMerkmaleCSV" onDragDropped="#handleDrop" onDragOver="#handleDragOver" prefHeight="25.0" prefWidth="130.0" style="-fx-background-color: WHITE;" text="CSV Export Mkm." textAlignment="CENTER" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="160.0" />
       <TextField fx:id="caid" editable="false" layoutX="25.0" layoutY="52.0" prefHeight="25.0" prefWidth="226.0" style="-fx-background-color: WHITE;" AnchorPane.topAnchor="52.0" />
       <TextField fx:id="gesamtPreisTextField" editable="false" layoutX="739.0" layoutY="260.0" prefHeight="26.0" prefWidth="226.0" style="-fx-background-color: WHITE; -fx-background-radius: 3;" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="260.0" />
-      <TextField fx:id="filterField" layoutX="543.0" layoutY="295.0" prefHeight="25.0" prefWidth="425.0" promptText="Suchen" style="-fx-background-color: WHITE;" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="294.0" />
+      <TextField fx:id="filterField" layoutX="543.0" layoutY="295.0" prefHeight="25.0" prefWidth="425.0" promptText="Suchen" style="-fx-background-color: WHITE;" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="295.0" />
+      <TextArea fx:id="ownBemerkung" editable="false" layoutX="738.0" layoutY="116.0" prefHeight="130.0" prefWidth="226.0" promptText="eigene Bemerkung" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="120.0" />
+      <BorderPane layoutX="321.0" layoutY="52.0" prefHeight="235.0" prefWidth="260.0">
+         <center>
+            <ImageView fx:id="image" fitHeight="235.0" fitWidth="260.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER" />
+         </center>
+      </BorderPane>
    </children>
 </AnchorPane>

@@ -1,5 +1,8 @@
 package main.application;
 
+import java.awt.Graphics2D;
+import java.awt.geom.AffineTransform;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -12,6 +15,8 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+import javax.imageio.ImageIO;
 
 import org.apache.logging.log4j.*;
 
@@ -78,7 +83,10 @@ public class SceneRealEditCarPartController {
 	private TextField zust;
 	private AutoCompletionBinding<String> autoCompleteZustand;
 	private Set<String> possibleSuggestionsZustand = new HashSet<>();
-	
+	@FXML
+	Button nextCarPartButton;
+	@FXML
+	Button prevCarPartButton;
 	@FXML
 	TextField oEOri;
 	@FXML
@@ -172,6 +180,9 @@ public class SceneRealEditCarPartController {
 	TextField eCatOri;
 	int oriECat;
 	@FXML
+	TextArea oriBemOWN;
+	String oriBeOw;
+	@FXML
 	TextField preisOri;
 	double oriPreis;
 	@FXML
@@ -215,12 +226,14 @@ public class SceneRealEditCarPartController {
 	String oriT;
 	String zusta;
 	String bemer;
+	String bemerOWN;
 	int kategorie;
 	double pr;
 	int cpid;
 	int meng;
 	String vers;
 	int imagecount;
+	Image images;
 	
 	Text nothingSelected = new Text("Bitte Titel über Reload Button erstellen");
 	Text missingteil = new Text("Bitte vorher ein Teil auswählen");
@@ -479,6 +492,7 @@ public class SceneRealEditCarPartController {
 	public void initView() {
 		oriTeilNrOri.setText(""+oriTNr);
 		bemerkungOri.setText(bemOri);
+		oriBemOWN.setText(oriBeOw);
 		teilOri.setText(""+teile);
 		titel.setText(oriTeil);
 		herstellerOri.setText(""+oriHerst);
@@ -536,6 +550,7 @@ public class SceneRealEditCarPartController {
 		oriStr = MySQLDatenbankConnection.getDouble("SELECT `Stromstaerke` FROM `carpartsdata` WHERE `CPID` = " + cpid);
 		oriPassend = MySQLDatenbankConnection.getString("SELECT `Passend` FROM `carpartsdata` WHERE `CPID` = "+cpid);
 		oriStrE = MySQLDatenbankConnection.getString("SELECT `StromstaerkeEinheit` FROM `carpartsdata` WHERE `CPID` = "+cpid);
+		oriBeOw = MySQLDatenbankConnection.getString("SELECT `versandEU` FROM `carpartsdata` WHERE `CPID` = "+cpid);
 	}
 	public void initVersion(BigDecimal version) {
 		cpid = MySQLDatenbankConnection.getInt("SELECT `CPID` FROM `changehistorycarparts` WHERE `CarPartID` = "+carpartid+" AND `CarID` = "+carid+" AND `Version` = "+version.toPlainString()+"");
@@ -559,11 +574,11 @@ public class SceneRealEditCarPartController {
 		oriStr = MySQLDatenbankConnection.getDouble("SELECT `Stromstaerke` FROM `changehistorycarparts` WHERE `CPID` = " + cpid+" AND `Version` = "+version.toPlainString());
 		oriPassend = MySQLDatenbankConnection.getString("SELECT `Passend` FROM `changehistorycarparts` WHERE `CPID` = "+cpid+" AND `Version` = "+version.toPlainString());
 		oriStrE = MySQLDatenbankConnection.getString("SELECT `StromstaerkeEinheit` FROM `changehistorycarparts` WHERE `CPID` = "+cpid+" AND `Version` = "+version.toPlainString());
+		oriBeOw = MySQLDatenbankConnection.getString("SELECT `versandEU` FROM `carpartsdata` WHERE `CPID` = "+cpid+" AND `Version` = "+version.toPlainString());
 	}
 	public void versionError() {
 			versionCheckerThread.pauseThread();
 				Platform.runLater(() -> {
-					
 					try {
 						FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("ChangedData.fxml"));		
 						Parent root;
@@ -604,6 +619,56 @@ public class SceneRealEditCarPartController {
 			}
         });
 	}	
+	public void rotate() {
+		if(image.getImage() != null) {
+			Path path = Paths.get(image.getImage().getUrl());
+			rotateImage(path.toFile());
+		}
+	}
+	public void rotateImage(File imageFile) {
+		
+		Platform.runLater(() -> {
+			try {
+				BufferedImage originalImage = ImageIO.read(imageFile);
+				ImageIO.write(rotateOriginalImage(originalImage, 90), "jpg", imageFile);
+				image.setImage(null);
+				images = new Image(imageFile.toString(), 250, 200, true, false);
+				image.setImage(images);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		});
+		
+	}
+	public BufferedImage rotateOriginalImage(BufferedImage originalImage, int degrees) {
+	    int width = originalImage.getWidth();
+	    int height = originalImage.getHeight();
+
+	    // Berechne die Abmessungen des neuen Bildes, um die gesamte Drehung zu speichern
+	    double radians = Math.toRadians(degrees);
+	    double sin = Math.abs(Math.sin(radians));
+	    double cos = Math.abs(Math.cos(radians));
+	    int newWidth = (int) Math.floor(cos * width + sin * height);
+	    int newHeight = (int) Math.floor(cos * height + sin * width);
+
+	    // Erzeuge ein leeres BufferedImage für das gedrehte Bild
+	    BufferedImage rotatedImage = new BufferedImage(newWidth, newHeight, originalImage.getType());
+
+	    // Erzeuge eine AffineTransform für die Rotation
+	    AffineTransform at = new AffineTransform();
+	    at.translate((newWidth - width) / 2, (newHeight - height) / 2);
+	    at.rotate(radians, width / 2, height / 2);
+
+	    // Zeichne das ursprüngliche Bild unter Verwendung der Rotationstransformation
+	    Graphics2D g = rotatedImage.createGraphics();
+	    g.setTransform(at);
+	    g.drawImage(originalImage, 0, 0, null);
+	    g.dispose();
+
+	    return rotatedImage;
+	}
+	
 	public void reload (){
 		if(teil.getText().equals("") && !oriTeilNr.getText().isEmpty()) {	
 				show.getChildren().clear();
@@ -644,11 +709,9 @@ public class SceneRealEditCarPartController {
 		oriScene.setOnKeyPressed(event -> {
 		    if (event.isControlDown() && event.getCode() == KeyCode.C) {
 		        // Strg+C wurde gedrückt
-		        // Führen Sie hier die Aktion zum Kopieren aus
 		        event.consume();
 		    } else if (event.isShortcutDown() && event.getCode() == KeyCode.V) {
 		        // Strg+V wurde gedrückt
-		        // Führen Sie hier die Aktion zum Einfügen aus
 		    	pasteImageFromClipboard();
 		        event.consume();
 		    }
@@ -680,60 +743,94 @@ public class SceneRealEditCarPartController {
 	}
 	public void image(boolean direction){
 		Path path = createDir(carid);
-		if(countImages(carpartid) > 0) {
-			if(direction) {
-				imagecount++;
-				if(imagecount < countImages(carpartid)) {
-					Path imageFile = path.resolve(""+filename.format(carpartid)+""+Alphabet[imagecount]+".jpg");
-					//image.setImage(new Image(imageFile.toString()));
-					centerImage(new Image(imageFile.toString()));
-				}else if (imagecount >= countImages(carpartid)) {
-					imagecount = countImages(carpartid) - 1;
-				}
+		Platform.runLater(() -> {
+			if(countImages(carpartid) > 0) {
+				if(direction) {
+					imagecount++;
+					if(imagecount < countImages(carpartid)) {
+						Path imageFile = path.resolve(""+filename.format(carpartid)+""+Alphabet[imagecount]+".jpg");
+						image.setImage(null);
+						images = new Image(imageFile.toString(), 250, 200, true, false);
+						image.setImage(images);
+					}else if (imagecount >= countImages(carpartid)) {
+						imagecount = countImages(carpartid) - 1;
+					}
+				}else {
+					imagecount--;
+					if(imagecount > 0) {
+						Path imageFile = path.resolve(""+filename.format(carpartid)+""+Alphabet[imagecount]+".jpg");
+						image.setImage(null);
+						images = new Image(imageFile.toString(), 250, 200, true, false);
+						image.setImage(images);
+					}if(imagecount <= 0) {
+						imagecount = 0;
+						Path imageFile = path.resolve(""+filename.format(carpartid)+""+Alphabet[imagecount]+".jpg");
+						image.setImage(null);
+						images = new Image(imageFile.toString(), 250, 200, true, false);
+						image.setImage(images);
+					}
+				} 
 			}else {
-				imagecount--;
-				if(imagecount > 0) {
-					Path imageFile = path.resolve(""+filename.format(carpartid)+""+Alphabet[imagecount]+".jpg");
-					//image.setImage(new Image(imageFile.toString()));
-					centerImage(new Image(imageFile.toString()));
-				}if(imagecount <= 0) {
-					imagecount = 0;
-					Path imageFile = path.resolve(""+filename.format(carpartid)+""+Alphabet[imagecount]+".jpg");
-					//image.setImage(new Image(imageFile.toString()));
-					centerImage(new Image(imageFile.toString()));
-				}
-			} 
-		}else {
-			image.setImage(null); 
-		}
+				image.setImage(null); 
+			}
+		});
 	}
 	public static void setCarID(int cid) {
 		carid = cid;		
 	}
-	public void centerImage(Image img) {
-		if (img != null) {
-            double w = 0;
-            double h = 0;
-
-            double ratioX = image.getFitWidth() / img.getWidth();
-            double ratioY = image.getFitHeight() / img.getHeight();
-
-            double reducCoeff = 0;
-            if(ratioX >= ratioY) {
-                reducCoeff = ratioY;
-            } else {
-                reducCoeff = ratioX;
-            }
-
-            w = img.getWidth() * reducCoeff;
-            h = img.getHeight() * reducCoeff;
-
-            image.setX((image.getFitWidth() - w) / 2);
-            image.setY((image.getFitHeight() - h) / 2);
-            image.setImage(img);
-
-        }
+		
+	public void nextCarPart() {
+		if(getNextCarPartID() != 0) {
+			versionCheckerThread.pauseThread();
+			if(versionCheckerThread.executor.isShutdown()) {
+				Platform.runLater(() -> {
+					images = null;
+					image.setImage(null);
+					setCarID(carid);
+					initCarPart(getNextCarPartID());
+					init();
+					initView();
+					image(false);
+				});
+			}
+		}
 	}
+	
+	public void prevCarPart() {
+		if(getPreviousCarPartID() != 0) {
+			versionCheckerThread.pauseThread();
+			if(versionCheckerThread.executor.isShutdown()) {
+				Platform.runLater(() -> {
+					images = null;
+					image.setImage(null);
+					setCarID(carid);
+					initCarPart(getPreviousCarPartID());
+					init();
+					initView();
+					image(false);
+				});
+			}
+		}
+	}
+	
+	public int getNextCarPartID() {
+		int nextCarPartID = MySQLDatenbankConnection.getInt("SELECT `CarPartID`\r\n"
+				+ "FROM `carpartsdata`\r\n"
+				+ "WHERE `CarID`='"+carid+"' AND `CarPartID` > "+carpartid+"\r\n"
+				+ "ORDER BY `CarPartID`\r\n"
+				+ "LIMIT 1;");
+		return nextCarPartID;
+	}
+	
+	public int getPreviousCarPartID() {
+		int nextCarPartID = MySQLDatenbankConnection.getInt("SELECT `CarPartID`\r\n"
+				+ "FROM `carpartsdata`\r\n"
+				+ "WHERE `CarID`='"+carid+"' AND `CarPartID` < "+carpartid+"\r\n"
+				+ "ORDER BY `CarPartID` DESC\r\n"
+				+ "LIMIT 1;");
+		return nextCarPartID;
+	}
+	
 	@FXML
 	private void handleDragOver(DragEvent event) {
 		if(event.getDragboard().hasFiles()) {
@@ -800,6 +897,7 @@ public class SceneRealEditCarPartController {
 	public void goBack() throws IOException {
 		versionCheckerThread.pauseThread();
 		if(versionCheckerThread.executor.isShutdown()) {
+			image.setImage(null);
 			checkWindow.close();
 			show.getChildren().clear();
 			SceneCarPartsController.setCarID(carid);
@@ -853,9 +951,11 @@ public class SceneRealEditCarPartController {
 			vers = setEditedStringComboBox(versandDE, vers, oriVDE);
 			meng = setEditedInteger(anzahl, meng, oriA);
 			bemer = setEditedStringTextArea(bemerkungOri, bemer, bemOri);
+			bemerOWN = setEditedStringTextArea(oriBemOWN, bemerOWN, oriBeOw);
 			//TODO AFTER
-			SceneRealEditCarPartsCheckController.init(oriTeil, teile, oriHerst, oriTNr, oriZust, oriECat, oriPreis, oriVDE, oriA, bemOri, orioEString, orieBFarbcodeString, oriebFarbeString, orieBPositionString, orieBProdeString, oriStrE, oriSpgE, oriStr, oriSpg, oriPassend);
-			SceneRealEditCarPartsCheckController.initSecond(tite, teiler, herst, oriT, zusta, kategorie, pr, vers, meng, bemer, oEString, eBFarbcodeString, ebFarbeString, eBPositionString, eBProdeString, strEin, spgEin, stro, span, pass);
+			image.setImage(null);
+			SceneRealEditCarPartsCheckController.init(oriTeil, teile, oriHerst, oriTNr, oriZust, oriECat, oriPreis, oriVDE, oriA, bemOri, orioEString, orieBFarbcodeString, oriebFarbeString, orieBPositionString, orieBProdeString, oriStrE, oriSpgE, oriStr, oriSpg, oriPassend, oriBeOw);
+			SceneRealEditCarPartsCheckController.initSecond(tite, teiler, herst, oriT, zusta, kategorie, pr, vers, meng, bemer, oEString, eBFarbcodeString, ebFarbeString, eBPositionString, eBProdeString, strEin, spgEin, stro, span, pass, bemerOWN);
 			SceneRealEditCarPartsCheckController.setCarID(carid);
 			SceneRealEditCarPartsCheckController.initCarPart(carpartid);
 			FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("RealEditCarPartsCheck.fxml"));	

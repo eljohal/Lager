@@ -44,6 +44,7 @@ public class SceneRealEditCarPartsCheckController {
 	static String versandDE;
 	static int menge;
 	static String bemerkung;
+	static String bemerkungOWN;
 	static String passend;
 	
 	static String oeS;
@@ -66,6 +67,7 @@ public class SceneRealEditCarPartsCheckController {
 	static String versandDE2;
 	static int menge2;
 	static String bemerkung2;
+	static String bemerkungOWN2;
 	static String passend2;
 	
 	static String oeS2;
@@ -100,8 +102,8 @@ public class SceneRealEditCarPartsCheckController {
 	Text spgT2 = new Text(" Spannung: "+spgS2);
 	Text pass = new Text(" passend für: "+passend);
 	Text pass2 = new Text(" passend für: "+passend2);
-	
-	
+	Text bemerkOWN2 = new Text(" eigene Bemerkung: "+bemerkungOWN2);
+	Text bemerkOWN = new Text(" eigene Bemerkung: "+bemerkungOWN);
 	Text tit = new Text(" Titel: "+titel);
 	Text tit2 = new Text(" Titel: "+titel2);
 	Text tei = new Text(" Teil: "+teil);
@@ -123,7 +125,7 @@ public class SceneRealEditCarPartsCheckController {
 	Text bemerkun = new Text(" Bemerkung: "+bemerkung);
 	Text bemerkun2 = new Text(" Bemerkung: "+bemerkung2);
 	
-	public static void init(String tite,String teile,String herste,String oriT,String zust,int eC, double pre, String vD, int men, String bem, String oe, String ebfarbCode, String ebfarbe, String ebPos, String ebProd, String strE, String spgE, double str, double spg, String passe) {
+	public static void init(String tite,String teile,String herste,String oriT,String zust,int eC, double pre, String vD, int men, String bem, String oe, String ebfarbCode, String ebfarbe, String ebPos, String ebProd, String strE, String spgE, double str, double spg, String passe, String beme) {
 		titel = tite;
 		teil = teile;
 		hersteller = herste;
@@ -145,8 +147,9 @@ public class SceneRealEditCarPartsCheckController {
 		strS = str;
 		spgS = spg;
 		passend = passe;
+		bemerkungOWN = beme;
 	}
-	public static void initSecond(String tite,String teile,String herste,String oriT,String zust,int eC, double pre, String vD, int men, String bem, String oe, String ebfarbCode, String ebfarbe, String ebPos, String ebProd, String strE, String spgE, double str, double spg, String passe) {
+	public static void initSecond(String tite,String teile,String herste,String oriT,String zust,int eC, double pre, String vD, int men, String bem, String oe, String ebfarbCode, String ebfarbe, String ebPos, String ebProd, String strE, String spgE, double str, double spg, String passe, String beme) {
 		titel2 = tite;
 		teil2 = teile;
 		hersteller2 = herste;
@@ -168,6 +171,7 @@ public class SceneRealEditCarPartsCheckController {
 		strS2 = str;
 		spgS2 = spg;
 		passend2 = passe;
+		bemerkungOWN2 = beme;
 	}
 	
 	public void initialize() {
@@ -193,6 +197,7 @@ public class SceneRealEditCarPartsCheckController {
 		compareText(strT, strT2);
 		compareText(strET, strET2);
 		compareText(pass, pass2);
+		compareText(bemerkOWN, bemerkOWN2);
 	}
 	
 	public void compareText(Text pre, Text post) {
@@ -232,8 +237,8 @@ public class SceneRealEditCarPartsCheckController {
 		sceneCarPartsController.versionCheckerThread.pauseThread();
 		version = version.add(new BigDecimal("0.00001"));
 		changes = "edit";
-		MySQLDatenbankConnection.update("INSERT INTO `changehistorycarparts`(`CPID`, `UserID`, `TimeStamp`, `ChangeID`, `CarID`, `Changed`, `CarPartID`, `Bezeichnung`, `Hersteller`, `OrignalTeilenummer`, `Zustand`, `Bemerkung`, `Kategorienummer`, `Preis`, `Menge`, `Versand`, `eBayProduktart`, `versandEU`, `Teil`, `OENumber`, `eBayPosition`, `eBayFarbe`, `eBayFarbecode`, `Spannung`, `SpannungEinheit`, `Stromstaerke`, `StromstaerkeEinheit`, `Passend`, `Version`) VALUES ('"+cpid+"','"+User.id+"','"+timestamp+"','"+i_max+"','"+carid+"','"+changes+"','"+carpartid+"','"+titel2+"','"+hersteller2+"','"+oriTeileNr2+"','"+zustand2+"','"+bemerkung2+"','"+eCat2+"','"+preis2+"','"+menge2+"','"+versandDE2+"','"+ebProdS2+"',' ','"+teil2+"','"+oeS2+"','"+ebPosS2+"','"+ebfarbeS2+"', '"+ebfarbCodeS2+"','"+spgS2+"','"+spgES2+"','"+strS2+"','"+strES2+"','"+passend2+"','"+version+"')");
-		MySQLDatenbankConnection.update("UPDATE `carpartsdata` SET `Bezeichnung`='"+titel2+"',`Hersteller`='"+hersteller2+"',`OrignalTeilenummer`='"+oriTeileNr2+"',`Zustand`='"+zustand2+"',`Bemerkung`='"+bemerkung2+"',`Kategorienummer`='"+eCat2+"',`Preis`='"+preis2+"',`Menge`='"+menge2+"',`Versand`='"+versandDE2+"',`eBayProduktart`='"+ebProdS2+"',`versandEU`=' ',`Teil`='"+teil2+"',`OENumber`='"+oeS2+"',`eBayPosition`='"+ebPosS2+"',`eBayFarbe`='"+ebfarbeS2+"',`eBayFarbecode`='"+ebfarbCodeS2+"',`Spannung`='"+spgS2+"',`SpannungEinheit`='"+spgES2+"',`Stromstaerke`='"+strS2+"',`StromstaerkeEinheit`='"+strES2+"',`Passend`='"+passend2+"',`Version`='"+version+"' WHERE `CPID` = "+cpid+"");
+		MySQLDatenbankConnection.update("INSERT INTO `changehistorycarparts`(`CPID`, `UserID`, `TimeStamp`, `ChangeID`, `CarID`, `Changed`, `CarPartID`, `Bezeichnung`, `Hersteller`, `OrignalTeilenummer`, `Zustand`, `Bemerkung`, `Kategorienummer`, `Preis`, `Menge`, `Versand`, `eBayProduktart`, `versandEU`, `Teil`, `OENumber`, `eBayPosition`, `eBayFarbe`, `eBayFarbecode`, `Spannung`, `SpannungEinheit`, `Stromstaerke`, `StromstaerkeEinheit`, `Passend`, `Version`) VALUES ('"+cpid+"','"+User.id+"','"+timestamp+"','"+i_max+"','"+carid+"','"+changes+"','"+carpartid+"','"+titel2+"','"+hersteller2+"','"+oriTeileNr2+"','"+zustand2+"','"+bemerkung2+"','"+eCat2+"','"+preis2+"','"+menge2+"','"+versandDE2+"','"+ebProdS2+"','"+bemerkungOWN2+"','"+teil2+"','"+oeS2+"','"+ebPosS2+"','"+ebfarbeS2+"', '"+ebfarbCodeS2+"','"+spgS2+"','"+spgES2+"','"+strS2+"','"+strES2+"','"+passend2+"','"+version+"')");
+		MySQLDatenbankConnection.update("UPDATE `carpartsdata` SET `Bezeichnung`='"+titel2+"',`Hersteller`='"+hersteller2+"',`OrignalTeilenummer`='"+oriTeileNr2+"',`Zustand`='"+zustand2+"',`Bemerkung`='"+bemerkung2+"',`Kategorienummer`='"+eCat2+"',`Preis`='"+preis2+"',`Menge`='"+menge2+"',`Versand`='"+versandDE2+"',`eBayProduktart`='"+ebProdS2+"',`versandEU`='"+bemerkungOWN2+"',`Teil`='"+teil2+"',`OENumber`='"+oeS2+"',`eBayPosition`='"+ebPosS2+"',`eBayFarbe`='"+ebfarbeS2+"',`eBayFarbecode`='"+ebfarbCodeS2+"',`Spannung`='"+spgS2+"',`SpannungEinheit`='"+spgES2+"',`Stromstaerke`='"+strS2+"',`StromstaerkeEinheit`='"+strES2+"',`Passend`='"+passend2+"',`Version`='"+version+"' WHERE `CPID` = "+cpid+"");
 		SceneCarPartsController.editInCarPartData(new CarParts(carpartid, cpid, titel2, zustand2, hersteller2, oriTeileNr2, preis2,versandDE2,menge2));
 		sceneCarPartsController.getStage(oriStag);
 		sceneCarPartsController.goBack();

@@ -74,7 +74,7 @@ public class VersionCheckerThread{
 	}
 	
     public void pauseThread() {
-        executor.shutdown(); // Beenden Sie den Executor vorübergehend
+        executor.shutdownNow(); // Beenden Sie den Executor vorübergehend
     }
 
     public void startThread() {
@@ -102,7 +102,7 @@ public class VersionCheckerThread{
     }
     
     public void pauseCarPartsChangesThread() {
-        carPartsChanges.shutdown(); // Beenden Sie den Executor vorübergehend
+        carPartsChanges.shutdownNow(); // Beenden Sie den Executor vorübergehend
     }
     
     public void startInit() {

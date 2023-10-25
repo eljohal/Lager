@@ -7,46 +7,47 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.TextFlow?>
 
 <AnchorPane fx:id="createcar" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="691.0" prefWidth="1070.0" style="-fx-background-color: GREY;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.application.SceneRealEditCarPartController">
    <children>
       <TextField fx:id="fake" editable="false" layoutX="328.0" layoutY="15.0" prefHeight="25.0" prefWidth="77.0" style="-fx-background-color: GREY;" />
-      <TextField fx:id="teil" layoutX="259.0" layoutY="260.0" prefHeight="25.0" prefWidth="226.0" promptText="Teil" style="-fx-background-color: WHITE;" AnchorPane.leftAnchor="260.0" AnchorPane.topAnchor="260.0" />
-      <TextField fx:id="hersteller" layoutX="260.0" layoutY="294.0" prefHeight="25.0" prefWidth="226.0" promptText="Teile Hersteller" style="-fx-background-color: WHITE;" AnchorPane.leftAnchor="260.0" AnchorPane.topAnchor="295.0" />
-      <TextField fx:id="oriTeilNr" layoutX="259.0" layoutY="330.0" prefHeight="25.0" prefWidth="226.0" promptText="Original Teilenummer" style="-fx-background-color: WHITE;" AnchorPane.leftAnchor="260.0" AnchorPane.topAnchor="330.0" />
-      <TextField fx:id="oE" layoutX="262.0" layoutY="365.0" prefHeight="25.0" prefWidth="226.0" promptText="OE Nummer" style="-fx-background-color: WHITE;" AnchorPane.leftAnchor="260.0" AnchorPane.topAnchor="365.0" />
-      <TextField id="txtFld" fx:id="eCat" layoutX="255.0" layoutY="400.0" prefHeight="25.0" prefWidth="226.0" promptText="eBay Kategorie" style="-fx-background-color: WHITE;" AnchorPane.leftAnchor="260.0" AnchorPane.topAnchor="400.0" />
-      <Button fx:id="getEbayCatButton" layoutX="494.0" layoutY="401.0" maxWidth="25.0" mnemonicParsing="false" onAction="#getEbayCat" prefHeight="20.0" style="-fx-background-radius: 0 5 5 0; -fx-background-color: WHITE;" text="&gt;" textAlignment="CENTER">
+      <TextField fx:id="teil" layoutX="260.0" layoutY="298.0" prefHeight="25.0" prefWidth="226.0" promptText="Teil" style="-fx-background-color: WHITE;" AnchorPane.leftAnchor="260.0" AnchorPane.topAnchor="298.0" />
+      <TextField fx:id="hersteller" layoutX="260.0" layoutY="333.0" prefHeight="25.0" prefWidth="226.0" promptText="Teile Hersteller" style="-fx-background-color: WHITE;" AnchorPane.leftAnchor="260.0" AnchorPane.topAnchor="333.0" />
+      <TextField fx:id="oriTeilNr" layoutX="260.0" layoutY="368.0" prefHeight="25.0" prefWidth="226.0" promptText="Original Teilenummer" style="-fx-background-color: WHITE;" AnchorPane.leftAnchor="260.0" AnchorPane.topAnchor="368.0" />
+      <TextField fx:id="oE" layoutX="260.0" layoutY="403.0" prefHeight="25.0" prefWidth="226.0" promptText="OE Nummer" style="-fx-background-color: WHITE;" AnchorPane.leftAnchor="260.0" AnchorPane.topAnchor="403.0" />
+      <TextField id="txtFld" fx:id="eCat" layoutX="260.0" layoutY="438.0" prefHeight="25.0" prefWidth="226.0" promptText="eBay Kategorie" style="-fx-background-color: WHITE;" AnchorPane.leftAnchor="260.0" AnchorPane.topAnchor="438.0" />
+      <Button fx:id="getEbayCatButton" layoutX="494.0" layoutY="439.0" maxWidth="25.0" mnemonicParsing="false" onAction="#getEbayCat" prefHeight="20.0" style="-fx-background-radius: 0 5 5 0; -fx-background-color: WHITE;" text="&gt;" textAlignment="CENTER">
          <font>
             <Font name="Yu Gothic Regular" size="13.0" />
          </font>
       </Button>
-      <TextField fx:id="preis" layoutX="261.0" layoutY="435.0" prefHeight="25.0" prefWidth="226.0" promptText="Preis (€)" style="-fx-background-color: WHITE;" AnchorPane.leftAnchor="260.0" AnchorPane.topAnchor="435.0" />
-      <ComboBox fx:id="versandDE" layoutX="260.0" layoutY="469.0" prefHeight="25.0" prefWidth="226.0" promptText="Versand" style="-fx-background-color: white;" AnchorPane.leftAnchor="260.0" AnchorPane.topAnchor="470.0" />
-      <TextField fx:id="anzahl" layoutX="260.0" layoutY="544.0" prefHeight="25.0" prefWidth="226.0" promptText="Menge" style="-fx-background-color: WHITE;" AnchorPane.leftAnchor="260.0" AnchorPane.topAnchor="505.0" />
-      <TextField fx:id="eBProde" layoutX="786.0" layoutY="265.0" prefHeight="25.0" prefWidth="226.0" promptText="eBay Merkmal Produktart" style="-fx-background-color: WHITE;" AnchorPane.leftAnchor="785.0" AnchorPane.topAnchor="260.0" />
-      <TextField fx:id="eBPosition" layoutX="787.0" layoutY="299.0" prefHeight="25.0" prefWidth="226.0" promptText="eBay Merkmal Position" style="-fx-background-color: WHITE;" AnchorPane.leftAnchor="785.0" AnchorPane.topAnchor="295.0" />
-      <TextField fx:id="ebFarbe" layoutX="269.0" layoutY="340.0" prefHeight="25.0" prefWidth="226.0" promptText="eBay Merkmal Farbe" style="-fx-background-color: WHITE;" AnchorPane.leftAnchor="785.0" AnchorPane.topAnchor="330.0" />
-      <TextField fx:id="eBFarbcode" layoutX="789.0" layoutY="370.0" prefHeight="25.0" prefWidth="226.0" promptText="eBay Merkmal Farbcode" style="-fx-background-color: WHITE;" AnchorPane.leftAnchor="785.0" AnchorPane.topAnchor="365.0" />
-      <TextField id="txtFld" fx:id="zust" layoutX="782.0" layoutY="405.0" prefHeight="25.0" prefWidth="226.0" promptText="Zustand" style="-fx-background-color: WHITE;" AnchorPane.leftAnchor="785.0" AnchorPane.topAnchor="400.0" />
-      <TextField fx:id="spg" layoutX="786.0" layoutY="436.0" prefHeight="25.0" prefWidth="35.0" promptText="U" style="-fx-background-color: WHITE;" AnchorPane.leftAnchor="785.0" AnchorPane.topAnchor="435.0" />
-      <ComboBox fx:id="spgE" layoutX="826.0" layoutY="436.0" prefHeight="25.0" prefWidth="70.0" promptText="E (V)" style="-fx-background-color: white;" AnchorPane.leftAnchor="825.0" AnchorPane.topAnchor="435.0" />
-      <TextField fx:id="str" layoutX="901.0" layoutY="436.0" prefHeight="25.0" prefWidth="35.0" promptText="I" style="-fx-background-color: WHITE;" AnchorPane.leftAnchor="900.0" AnchorPane.topAnchor="435.0" />
-      <ComboBox fx:id="strE" layoutX="941.0" layoutY="436.0" prefHeight="25.0" prefWidth="70.0" promptText="E (A)" style="-fx-background-color: white;" AnchorPane.leftAnchor="940.0" AnchorPane.topAnchor="435.0" />
-      <TextField id="txtFld" fx:id="passend" layoutX="778.0" layoutY="471.0" prefHeight="25.0" prefWidth="226.0" promptText="passend für" style="-fx-background-color: WHITE;" AnchorPane.leftAnchor="785.0" AnchorPane.topAnchor="470.0" />
+      <TextField fx:id="preis" layoutX="260.0" layoutY="473.0" prefHeight="25.0" prefWidth="226.0" promptText="Preis (€)" style="-fx-background-color: WHITE;" AnchorPane.leftAnchor="260.0" AnchorPane.topAnchor="473.0" />
+      <ComboBox fx:id="versandDE" layoutX="260.0" layoutY="508.0" prefHeight="25.0" prefWidth="226.0" promptText="Versand" style="-fx-background-color: white;" AnchorPane.leftAnchor="260.0" AnchorPane.topAnchor="508.0" />
+      <TextField fx:id="anzahl" layoutX="260.0" layoutY="543.0" prefHeight="25.0" prefWidth="226.0" promptText="Menge" style="-fx-background-color: WHITE;" AnchorPane.leftAnchor="260.0" AnchorPane.topAnchor="543.0" />
+      <TextField fx:id="eBProde" layoutX="785.0" layoutY="298.0" prefHeight="25.0" prefWidth="226.0" promptText="eBay Merkmal Produktart" style="-fx-background-color: WHITE;" AnchorPane.leftAnchor="785.0" AnchorPane.rightAnchor="59.0" AnchorPane.topAnchor="298.0" />
+      <TextField fx:id="eBPosition" layoutX="785.0" layoutY="333.0" prefHeight="25.0" prefWidth="226.0" promptText="eBay Merkmal Position" style="-fx-background-color: WHITE;" AnchorPane.leftAnchor="785.0" AnchorPane.rightAnchor="59.0" AnchorPane.topAnchor="333.0" />
+      <TextField fx:id="ebFarbe" layoutX="785.0" layoutY="368.0" prefHeight="25.0" prefWidth="226.0" promptText="eBay Merkmal Farbe" style="-fx-background-color: WHITE;" AnchorPane.leftAnchor="785.0" AnchorPane.rightAnchor="59.0" AnchorPane.topAnchor="368.0" />
+      <TextField fx:id="eBFarbcode" layoutX="785.0" layoutY="403.0" prefHeight="25.0" prefWidth="226.0" promptText="eBay Merkmal Farbcode" style="-fx-background-color: WHITE;" AnchorPane.leftAnchor="785.0" AnchorPane.rightAnchor="59.0" AnchorPane.topAnchor="403.0" />
+      <TextField id="txtFld" fx:id="zust" layoutX="785.0" layoutY="438.0" prefHeight="25.0" prefWidth="226.0" promptText="Zustand" style="-fx-background-color: WHITE;" AnchorPane.leftAnchor="785.0" AnchorPane.rightAnchor="59.0" AnchorPane.topAnchor="438.0" />
+      <TextField fx:id="spg" layoutX="785.0" layoutY="473.0" prefHeight="25.0" prefWidth="35.0" promptText="U" style="-fx-background-color: WHITE;" AnchorPane.leftAnchor="785.0" AnchorPane.rightAnchor="250.0" AnchorPane.topAnchor="473.0" />
+      <ComboBox fx:id="spgE" layoutX="825.0" layoutY="473.0" prefHeight="25.0" prefWidth="70.0" promptText="E (V)" style="-fx-background-color: white;" AnchorPane.leftAnchor="825.0" AnchorPane.rightAnchor="175.0" AnchorPane.topAnchor="473.0" />
+      <TextField fx:id="str" layoutX="900.0" layoutY="473.0" prefHeight="25.0" prefWidth="35.0" promptText="I" style="-fx-background-color: WHITE;" AnchorPane.leftAnchor="900.0" AnchorPane.rightAnchor="135.0" AnchorPane.topAnchor="473.0" />
+      <ComboBox fx:id="strE" layoutX="940.0" layoutY="473.0" prefHeight="25.0" prefWidth="70.0" promptText="E (A)" style="-fx-background-color: white;" AnchorPane.leftAnchor="940.0" AnchorPane.rightAnchor="59.0" AnchorPane.topAnchor="473.0" />
+      <TextField id="txtFld" fx:id="passend" layoutX="785.0" layoutY="508.0" prefHeight="25.0" prefWidth="226.0" promptText="passend für" style="-fx-background-color: WHITE;" AnchorPane.leftAnchor="785.0" AnchorPane.rightAnchor="59.0" AnchorPane.topAnchor="508.0" />
       <Button fx:id="reload" layoutX="420.0" layoutY="579.0" maxWidth="38.0" mnemonicParsing="false" onAction="#reload" prefHeight="25.0" prefWidth="35.0" style="-fx-background-radius: 5 5 5 5; -fx-background-color: WHITE;" text="⟳" textAlignment="CENTER" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="580.0">
          <font>
             <Font name="Yu Gothic Regular" size="13.0" />
          </font>
       </Button>
-      <TextField fx:id="spgStrOri" editable="false" layoutX="552.0" layoutY="439.0" prefHeight="26.0" prefWidth="226.0" style="-fx-background-color: WHITE; -fx-background-radius: 3;" AnchorPane.leftAnchor="550.0" AnchorPane.topAnchor="435.0" />
+      <TextField fx:id="spgStrOri" editable="false" layoutX="550.0" layoutY="473.0" prefHeight="26.0" prefWidth="226.0" style="-fx-background-color: WHITE; -fx-background-radius: 3;" AnchorPane.leftAnchor="550.0" AnchorPane.topAnchor="473.0" />
       <TextArea fx:id="bemerkungOri" layoutX="26.0" layoutY="122.0" prefHeight="130.0" prefWidth="226.0" promptText="Bemerkung" AnchorPane.leftAnchor="25.0" AnchorPane.topAnchor="120.0" />
       <Button fx:id="add" layoutX="59.0" layoutY="642.0" mnemonicParsing="false" onAction="#change" prefHeight="25.0" prefWidth="130.0" style="-fx-background-color: WHITE;" text="Fahrzeugteil bearb." textAlignment="CENTER" AnchorPane.leftAnchor="59.0" AnchorPane.topAnchor="642.0" />
       <Button fx:id="abbrechen" layoutX="340.0" layoutY="642.0" mnemonicParsing="false" onAction="#goBack" prefHeight="25.0" prefWidth="130.0" style="-fx-background-color: WHITE;" text="Abbrechen" textAlignment="CENTER" AnchorPane.rightAnchor="64.60000000000002" AnchorPane.topAnchor="642.0" />
-      <TextField fx:id="zustOri" editable="false" layoutX="552.0" layoutY="404.0" prefHeight="26.0" prefWidth="226.0" style="-fx-background-color: WHITE; -fx-background-radius: 3;" AnchorPane.leftAnchor="550.0" AnchorPane.topAnchor="400.0" />
-      <TextField fx:id="eBFarbcodeOri" editable="false" layoutX="552.0" layoutY="369.0" prefHeight="26.0" prefWidth="226.0" style="-fx-background-color: WHITE; -fx-background-radius: 3;" AnchorPane.leftAnchor="550.0" AnchorPane.topAnchor="365.0" />
+      <TextField fx:id="zustOri" editable="false" layoutX="550.0" layoutY="438.0" prefHeight="26.0" prefWidth="226.0" style="-fx-background-color: WHITE; -fx-background-radius: 3;" AnchorPane.leftAnchor="550.0" AnchorPane.topAnchor="438.0" />
+      <TextField fx:id="eBFarbcodeOri" editable="false" layoutX="550.0" layoutY="403.0" prefHeight="26.0" prefWidth="226.0" style="-fx-background-color: WHITE; -fx-background-radius: 3;" AnchorPane.leftAnchor="550.0" AnchorPane.topAnchor="403.0" />
       <TextField fx:id="titel" layoutX="49.0" layoutY="579.0" prefHeight="26.0" prefWidth="348.0" promptText="Titel" style="-fx-background-color: WHITE;" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="200.0" AnchorPane.topAnchor="580.0" />
       <Label layoutX="25.0" layoutY="5.0" prefHeight="45.0" prefWidth="370.0" text="Fahrzeugteil bearbeiten" AnchorPane.topAnchor="0.0">
          <font>
@@ -56,36 +57,48 @@
       <TextField fx:id="caid" editable="false" layoutX="25.0" layoutY="52.0" prefHeight="26.0" prefWidth="226.0" style="-fx-background-color: WHITE; -fx-background-radius: 3;" AnchorPane.leftAnchor="25.0" AnchorPane.topAnchor="50.0" />
       <TextField fx:id="modell" editable="false" layoutX="25.0" layoutY="85.0" prefHeight="26.0" prefWidth="226.0" style="-fx-background-color: WHITE; -fx-background-radius: 3;" AnchorPane.leftAnchor="25.0" AnchorPane.topAnchor="85.0" />
       <TextFlow fx:id="show" layoutX="49.0" layoutY="605.0" prefHeight="26.0" prefWidth="422.0" AnchorPane.bottomAnchor="55.0" />
-      <ImageView fx:id="image" fitHeight="150.0" fitWidth="200.0" layoutX="246.0" layoutY="47.0" onDragDropped="#handleDrop" onDragOver="#handleDragOver" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="275.0" />
-      <Button fx:id="rightpic" layoutX="375.0" layoutY="213.0" maxWidth="25.0" mnemonicParsing="false" onAction="#rightUp" prefHeight="20.0" style="-fx-background-radius: 0 5 5 0; -fx-background-color: WHITE;" text="&gt;" textAlignment="CENTER">
+      <Button fx:id="rightpic" layoutX="401.0" layoutY="259.0" maxWidth="25.0" mnemonicParsing="false" onAction="#rightUp" prefHeight="20.0" style="-fx-background-radius: 0 5 5 0; -fx-background-color: WHITE;" text="&gt;" textAlignment="CENTER">
          <font>
             <Font name="Yu Gothic Regular" size="13.0" />
          </font>
       </Button>
-      <Button fx:id="picleft" layoutX="347.0" layoutY="213.0" maxWidth="25.0" mnemonicParsing="false" onAction="#leftDown" prefHeight="20.0" style="-fx-background-radius: 5 0 0 5; -fx-background-color: WHITE;" text="&lt;" textAlignment="CENTER">
+      <Button fx:id="picleft" layoutX="373.0" layoutY="259.0" maxWidth="25.0" mnemonicParsing="false" onAction="#leftDown" prefHeight="20.0" style="-fx-background-radius: 5 0 0 5; -fx-background-color: WHITE;" text="&lt;" textAlignment="CENTER">
          <font>
             <Font name="Yu Gothic Regular" size="13.0" />
          </font>
       </Button>
-      <TextField fx:id="teilOri" editable="false" layoutX="25.0" layoutY="259.0" prefHeight="26.0" prefWidth="226.0" style="-fx-background-color: WHITE; -fx-background-radius: 3;" AnchorPane.leftAnchor="25.0" />
-      <TextField fx:id="herstellerOri" editable="false" layoutX="25.0" layoutY="294.0" prefHeight="26.0" prefWidth="226.0" style="-fx-background-color: WHITE; -fx-background-radius: 3;" AnchorPane.leftAnchor="25.0" AnchorPane.topAnchor="295.0" />
-      <TextField fx:id="oriTeilNrOri" editable="false" layoutX="25.0" layoutY="329.0" prefHeight="26.0" prefWidth="226.0" style="-fx-background-color: WHITE; -fx-background-radius: 3;" AnchorPane.leftAnchor="25.0" AnchorPane.topAnchor="330.0" />
-      <TextField fx:id="oEOri" editable="false" layoutX="25.0" layoutY="364.0" prefHeight="26.0" prefWidth="226.0" style="-fx-background-color: WHITE; -fx-background-radius: 3;" AnchorPane.leftAnchor="25.0" AnchorPane.topAnchor="365.0" />
-      <TextField fx:id="eCatOri" editable="false" layoutX="25.0" layoutY="399.0" prefHeight="26.0" prefWidth="226.0" style="-fx-background-color: WHITE; -fx-background-radius: 3;" AnchorPane.leftAnchor="25.0" AnchorPane.topAnchor="400.0" />
-      <TextField fx:id="preisOri" editable="false" layoutX="25.0" layoutY="434.0" prefHeight="26.0" prefWidth="226.0" style="-fx-background-color: WHITE; -fx-background-radius: 3;" AnchorPane.leftAnchor="25.0" AnchorPane.topAnchor="435.0" />
-      <TextField fx:id="versandDEOri" editable="false" layoutX="25.0" layoutY="469.0" prefHeight="26.0" prefWidth="226.0" style="-fx-background-color: WHITE; -fx-background-radius: 3;" />
-      <TextField fx:id="anzahlOri" editable="false" layoutX="25.0" layoutY="539.0" prefHeight="26.0" prefWidth="226.0" style="-fx-background-color: WHITE; -fx-background-radius: 3;" AnchorPane.topAnchor="505.0" />
-      <Button fx:id="rightpic1" alignment="CENTER" layoutX="410.0" layoutY="213.0" maxWidth="25.0" mnemonicParsing="false" onAction="#delete" prefHeight="20.0" style="-fx-background-radius: 5 5 5 5; -fx-background-color: WHITE;" text="🗑" textAlignment="CENTER">
+      <TextField fx:id="teilOri" editable="false" layoutX="25.0" layoutY="297.0" prefHeight="26.0" prefWidth="226.0" style="-fx-background-color: WHITE; -fx-background-radius: 3;" AnchorPane.leftAnchor="25.0" />
+      <TextField fx:id="herstellerOri" editable="false" layoutX="25.0" layoutY="333.0" prefHeight="26.0" prefWidth="226.0" style="-fx-background-color: WHITE; -fx-background-radius: 3;" AnchorPane.leftAnchor="25.0" AnchorPane.topAnchor="333.0" />
+      <TextField fx:id="oriTeilNrOri" editable="false" layoutX="25.0" layoutY="368.0" prefHeight="26.0" prefWidth="226.0" style="-fx-background-color: WHITE; -fx-background-radius: 3;" AnchorPane.leftAnchor="25.0" AnchorPane.topAnchor="368.0" />
+      <TextField fx:id="oEOri" editable="false" layoutX="25.0" layoutY="403.0" prefHeight="26.0" prefWidth="226.0" style="-fx-background-color: WHITE; -fx-background-radius: 3;" AnchorPane.leftAnchor="25.0" AnchorPane.topAnchor="403.0" />
+      <TextField fx:id="eCatOri" editable="false" layoutX="25.0" layoutY="438.0" prefHeight="26.0" prefWidth="226.0" style="-fx-background-color: WHITE; -fx-background-radius: 3;" AnchorPane.leftAnchor="25.0" AnchorPane.topAnchor="438.0" />
+      <TextField fx:id="preisOri" editable="false" layoutX="25.0" layoutY="473.0" prefHeight="26.0" prefWidth="226.0" style="-fx-background-color: WHITE; -fx-background-radius: 3;" AnchorPane.leftAnchor="25.0" AnchorPane.topAnchor="473.0" />
+      <TextField fx:id="versandDEOri" editable="false" layoutX="25.0" layoutY="507.0" prefHeight="26.0" prefWidth="226.0" style="-fx-background-color: WHITE; -fx-background-radius: 3;" />
+      <TextField fx:id="anzahlOri" editable="false" layoutX="25.0" layoutY="543.0" prefHeight="26.0" prefWidth="226.0" style="-fx-background-color: WHITE; -fx-background-radius: 3;" AnchorPane.topAnchor="543.0" />
+      <Button fx:id="rightpic1" alignment="CENTER" layoutX="436.0" layoutY="259.0" maxWidth="25.0" mnemonicParsing="false" onAction="#delete" prefHeight="20.0" style="-fx-background-radius: 5 5 5 5; -fx-background-color: WHITE;" text="🗑" textAlignment="CENTER">
          <font>
             <Font name="Yu Gothic Regular" size="13.0" />
          </font>
       </Button>
-      <TextField fx:id="eBProdeOri" editable="false" layoutX="552.0" layoutY="264.0" prefHeight="26.0" prefWidth="226.0" style="-fx-background-color: WHITE; -fx-background-radius: 3;" AnchorPane.leftAnchor="550.0" AnchorPane.topAnchor="260.0" />
-      <TextField fx:id="eBPositionOri" editable="false" layoutX="552.0" layoutY="299.0" prefHeight="26.0" prefWidth="226.0" style="-fx-background-color: WHITE; -fx-background-radius: 3;" AnchorPane.leftAnchor="550.0" AnchorPane.topAnchor="295.0" />
-      <TextField fx:id="ebFarbeOri" editable="false" layoutX="552.0" layoutY="334.0" prefHeight="26.0" prefWidth="226.0" style="-fx-background-color: WHITE; -fx-background-radius: 3;" AnchorPane.leftAnchor="550.0" AnchorPane.topAnchor="330.0" />
-      <ComboBox fx:id="versionSelection" layoutX="794.0" layoutY="51.0" prefHeight="25.0" prefWidth="226.0" promptText="andere Version verwenden" style="-fx-background-color: white;" AnchorPane.leftAnchor="785.0" AnchorPane.topAnchor="50.0" />
+      <TextField fx:id="eBProdeOri" editable="false" layoutX="550.0" layoutY="298.0" prefHeight="26.0" prefWidth="226.0" style="-fx-background-color: WHITE; -fx-background-radius: 3;" AnchorPane.leftAnchor="550.0" AnchorPane.topAnchor="298.0" />
+      <TextField fx:id="eBPositionOri" editable="false" layoutX="550.0" layoutY="333.0" prefHeight="26.0" prefWidth="226.0" style="-fx-background-color: WHITE; -fx-background-radius: 3;" AnchorPane.leftAnchor="550.0" AnchorPane.topAnchor="333.0" />
+      <TextField fx:id="ebFarbeOri" editable="false" layoutX="550.0" layoutY="368.0" prefHeight="26.0" prefWidth="226.0" style="-fx-background-color: WHITE; -fx-background-radius: 3;" AnchorPane.leftAnchor="550.0" AnchorPane.topAnchor="368.0" />
+      <ComboBox fx:id="versionSelection" layoutX="794.0" layoutY="51.0" prefHeight="25.0" prefWidth="226.0" promptText="andere Version verwenden" style="-fx-background-color: white;" AnchorPane.leftAnchor="785.0" AnchorPane.rightAnchor="59.0" AnchorPane.topAnchor="50.0" />
       <TextField fx:id="capid" editable="false" layoutX="550.0" layoutY="47.0" prefHeight="26.0" prefWidth="226.0" style="-fx-background-color: WHITE; -fx-background-radius: 3;" AnchorPane.leftAnchor="550.0" AnchorPane.topAnchor="50.0" />
       <Label fx:id="characterCountLabel" layoutX="479.0" layoutY="558.0" prefHeight="26.0" prefWidth="35.0" style="-fx-background-color: WHITE; -fx-background-radius: 3;" AnchorPane.rightAnchor="150.0" AnchorPane.topAnchor="580.0" />
-      <TextField fx:id="passendOri" editable="false" layoutX="548.0" layoutY="470.0" prefHeight="26.0" prefWidth="226.0" style="-fx-background-color: WHITE; -fx-background-radius: 3;" AnchorPane.leftAnchor="550.0" AnchorPane.topAnchor="470.0" />
+      <TextField fx:id="passendOri" editable="false" layoutX="550.0" layoutY="508.0" prefHeight="26.0" prefWidth="226.0" style="-fx-background-color: WHITE; -fx-background-radius: 3;" AnchorPane.leftAnchor="550.0" AnchorPane.topAnchor="508.0" />
+      <Button fx:id="rotate" layoutX="328.0" layoutY="259.0" maxWidth="30.0" mnemonicParsing="false" onAction="#rotate" prefHeight="20.0" style="-fx-background-radius: 5 5 5 5; -fx-background-color: WHITE;" text="⟳" textAlignment="CENTER">
+         <font>
+            <Font name="Yu Gothic Regular" size="13.0" />
+         </font>
+      </Button>
+      <Button fx:id="nextCarPartButton" layoutX="838.0" layoutY="86.0" mnemonicParsing="false" onAction="#nextCarPart" prefHeight="25.0" prefWidth="130.0" style="-fx-background-color: WHITE;" text="nächstes Fahrzeugteil" textAlignment="CENTER" AnchorPane.topAnchor="86.0" />
+      <Button fx:id="prevCarPartButton" layoutX="690.0" layoutY="86.0" mnemonicParsing="false" onAction="#prevCarPart" prefHeight="25.0" prefWidth="130.0" style="-fx-background-color: WHITE;" text="vorheriges Fahrzeugteil" textAlignment="CENTER" AnchorPane.topAnchor="86.0" />
+      <TextArea fx:id="oriBemOWN" layoutX="550.0" layoutY="129.0" prefHeight="130.0" prefWidth="461.0" promptText="eigene Bemerkung" AnchorPane.leftAnchor="550.0" AnchorPane.rightAnchor="59.0" />
+      <BorderPane layoutX="295.0" layoutY="47.0" prefHeight="200.0" prefWidth="250.0" AnchorPane.leftAnchor="275.0">
+         <center>
+            <ImageView fx:id="image" fitHeight="200.0" fitWidth="250.0" onDragDropped="#handleDrop" onDragOver="#handleDragOver" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER" />
+         </center>
+      </BorderPane>
    </children>
 </AnchorPane>

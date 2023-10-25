@@ -7,6 +7,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.TextFlow?>
 
@@ -42,13 +43,13 @@
          </font>
       </Button>
       <TextField fx:id="titel" layoutX="25.0" layoutY="669.0" prefHeight="26.0" prefWidth="436.0" promptText="Titel (*)" style="-fx-background-color: WHITE;" AnchorPane.leftAnchor="25.0" AnchorPane.topAnchor="669.0" />
-      <TextArea fx:id="bemerkung" layoutX="307.0" layoutY="529.0" prefHeight="130.0" prefWidth="226.0" promptText="Bemerkung" AnchorPane.leftAnchor="307.0" AnchorPane.topAnchor="529.0" />
+      <TextArea fx:id="bemerkung" layoutX="307.0" layoutY="529.0" prefHeight="130.0" prefWidth="226.0" promptText="eBay Bemerkung" AnchorPane.leftAnchor="307.0" AnchorPane.topAnchor="529.0" />
+      <TextArea fx:id="ownBemerkung" layoutX="25.0" layoutY="118.0" prefHeight="130.0" prefWidth="226.0" promptText="eigene Bemerkung" />
       <Button fx:id="add" layoutX="60.0" layoutY="758.0" mnemonicParsing="false" onAction="#addCarParts" prefHeight="25.0" prefWidth="130.0" style="-fx-background-color: WHITE;" text="Fahrzeugteil hinzuf." textAlignment="CENTER" AnchorPane.leftAnchor="60.0" AnchorPane.topAnchor="758.0" />
       <Button fx:id="abbrechen" layoutX="367.0" layoutY="758.0" mnemonicParsing="false" onAction="#goBack" prefHeight="25.0" prefWidth="130.0" style="-fx-background-color: WHITE;" text="Abbrechen" textAlignment="CENTER" AnchorPane.rightAnchor="60.0" AnchorPane.topAnchor="758.0" />
       <TextField fx:id="caid" editable="false" layoutX="25.0" layoutY="52.0" prefHeight="26.0" prefWidth="226.0" style="-fx-background-color: WHITE; -fx-background-radius: 3;" />
       <TextField fx:id="modell" editable="false" layoutX="25.0" layoutY="85.0" prefHeight="26.0" prefWidth="226.0" style="-fx-background-color: WHITE; -fx-background-radius: 3;" />
-      <TextFlow fx:id="show" layoutX="24.0" layoutY="135.0" prefHeight="113.0" prefWidth="226.0" />
-      <ImageView fx:id="image" fitHeight="262.0" fitWidth="270.0" layoutX="272.0" layoutY="52.0" onDragDropped="#handleDrop" onDragOver="#handleDragOver" pickOnBounds="true" preserveRatio="true" />
+      <TextFlow fx:id="show" layoutX="23.0" layoutY="720.0" prefHeight="26.0" prefWidth="512.0" />
       <Button fx:id="rightpic" layoutX="407.0" layoutY="320.0" maxWidth="25.0" mnemonicParsing="false" onAction="#rightUp" prefHeight="20.0" style="-fx-background-radius: 0 5 5 0; -fx-background-color: WHITE;" text="&gt;" textAlignment="CENTER" AnchorPane.leftAnchor="406.0" AnchorPane.topAnchor="320.0">
          <font>
             <Font name="Yu Gothic Regular" size="13.0" />
@@ -70,5 +71,15 @@
          </font>
       </Button>
       <Label fx:id="characterCountLabel" layoutX="469.0" layoutY="669.0" prefHeight="26.0" prefWidth="35.0" style="-fx-background-color: WHITE; -fx-background-radius: 3;" AnchorPane.topAnchor="669.0" />
+      <BorderPane layoutX="272.0" layoutY="52.0" prefHeight="260.0" prefWidth="270.0">
+         <center>
+            <ImageView fx:id="image" fitHeight="260.0" fitWidth="270.0" onDragDropped="#handleDrop" onDragOver="#handleDragOver" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER" />
+         </center>
+      </BorderPane>
+      <Button fx:id="rotate" layoutX="332.0" layoutY="320.0" maxWidth="30.0" mnemonicParsing="false" onAction="#rotate" prefHeight="20.0" style="-fx-background-radius: 5 5 5 5; -fx-background-color: WHITE;" text="⟳" textAlignment="CENTER">
+         <font>
+            <Font name="Yu Gothic Regular" size="13.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>
